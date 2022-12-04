@@ -35,7 +35,7 @@ namespace System.Windows.Forms
     /// <para>AGauge - Copyright (C) 2007 A.J.Bauer</para>
     /// <link>http://www.codeproject.com/Articles/17559/A-fast-and-performing-gauge</link>
     /// </summary>
-    [ToolboxBitmapAttribute(typeof(AGauge), "AGauge.AGauge.bmp"),
+    [ToolboxBitmap(typeof(AGauge), "AGauge.AGauge.bmp"),
   DefaultEvent("ValueInRangeChanged"),
   Description("Displays a value on an analog gauge. Raises an event if the value enters one of the definable ranges.")]
     public partial class AGauge : Control, ISupportInitialize
@@ -153,7 +153,7 @@ namespace System.Windows.Forms
         //public new Boolean AutoSize { get { return false; } set { /*Do Nothing */ } }
         public new Boolean ForeColor { get { return false; } set { /*Do Nothing */ } }
         public new Boolean ImeMode { get { return false; } set { /*Do Nothing */ } }
-        public override System.Drawing.Color BackColor
+        public override Color BackColor
         {
             get { return base.BackColor; }
             set
@@ -163,7 +163,7 @@ namespace System.Windows.Forms
                 Refresh();
             }
         }
-        public override System.Drawing.Font Font
+        public override Font Font
         {
             get { return base.Font; }
             set
@@ -173,7 +173,7 @@ namespace System.Windows.Forms
                 Refresh();
             }
         }
-        public override System.Windows.Forms.ImageLayout BackgroundImageLayout
+        public override ImageLayout BackgroundImageLayout
         {
             get { return base.BackgroundImageLayout; }
             set
@@ -197,9 +197,9 @@ namespace System.Windows.Forms
         }
 
         #region Properties  
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Data),
-        System.ComponentModel.Description("Gauge value.")]
+        Description("Gauge value.")]
         public Single Value
         {
             get { return m_value; }
@@ -244,9 +244,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
-        System.ComponentModel.Category(Categories.Appearance),
-        System.ComponentModel.Description("Auto size Mode of the gauge.")]
+        [Browsable(true),
+        Category(Categories.Appearance),
+        Description("Auto size Mode of the gauge.")]
         [DefaultValue(false)]
         public Boolean GaugeAutoSize
         {
@@ -262,25 +262,25 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
-        System.ComponentModel.Category(Categories.Appearance),
-        System.ComponentModel.Description("Gauge Ranges.")]
+        [Browsable(true),
+        Category(Categories.Appearance),
+        Description("Gauge Ranges.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public AGaugeRangeCollection GaugeRanges { get { return _GaugeRanges; } }
+        public AGaugeRangeCollection GaugeRanges => _GaugeRanges;
         private AGaugeRangeCollection _GaugeRanges;
 
-        [System.ComponentModel.Browsable(true),
-        System.ComponentModel.Category(Categories.Appearance),
-        System.ComponentModel.Description("Gauge Labels.")]
+        [Browsable(true),
+        Category(Categories.Appearance),
+        Description("Gauge Labels.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public AGaugeLabelCollection GaugeLabels { get { return _GaugeLabels; } }
+        public AGaugeLabelCollection GaugeLabels => _GaugeLabels;
         private AGaugeLabelCollection _GaugeLabels;
 
         #region << Gauge Base >>
-        [System.ComponentModel.Browsable(true),
-        System.ComponentModel.Category(Categories.Appearance),
-        System.ComponentModel.Description("The center of the gauge (in the control's client area)."),
-        System.ComponentModel.DefaultValue(typeof(Point), "100, 100")]
+        [Browsable(true),
+        Category(Categories.Appearance),
+        Description("The center of the gauge (in the control's client area)."),
+        DefaultValue(typeof(Point), "100, 100")]
         public Point Center
         {
             get { return m_Center; }
@@ -295,9 +295,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Colors),
-        System.ComponentModel.Description("The color of the base arc.")]
+        Description("The color of the base arc.")]
         [DefaultValue(typeof(Color), nameof(Color.Gray))]
         public Color BaseArcColor
         {
@@ -313,9 +313,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The radius of the base arc.")]
+        Description("The radius of the base arc.")]
         [DefaultValue(m_DefaultBaseArcRadius)]
         public Int32 BaseArcRadius
         {
@@ -331,9 +331,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The start angle of the base arc.")]
+        Description("The start angle of the base arc.")]
         [DefaultValue(m_DefaultBaseArcStart)]
         public Int32 BaseArcStart
         {
@@ -349,9 +349,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The sweep angle of the base arc.")]
+        Description("The sweep angle of the base arc.")]
         [DefaultValue(m_DefaultBaseArcSweep)]
         public Int32 BaseArcSweep
         {
@@ -367,9 +367,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The width of the base arc.")]
+        Description("The width of the base arc.")]
         [DefaultValue(m_DefaultBaseArcWidth)]
         public Int32 BaseArcWidth
         {
@@ -389,9 +389,9 @@ namespace System.Windows.Forms
 
         #region << Gauge Scale >>
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Data),
-        System.ComponentModel.Description("The minimum value to show on the scale.")]
+        Description("The minimum value to show on the scale.")]
         [DefaultValue(m_DefaultMinValue)]
         public Single MinValue
         {
@@ -415,9 +415,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Data),
-        System.ComponentModel.Description("The maximum value to show on the scale.")]
+        Description("The maximum value to show on the scale.")]
         [DefaultValue(m_DefaultMaxValue)]
         public Single MaxValue
         {
@@ -441,9 +441,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Colors),
-        System.ComponentModel.Description("The color of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
+        Description("The color of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
         [DefaultValue(typeof(Color), "Black")]
         public Color ScaleLinesInterColor
         {
@@ -459,9 +459,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The inner radius of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
+        Description("The inner radius of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
         [DefaultValue(m_DefaultScaleLinesInterInnerRadius)]
         public Int32 ScaleLinesInterInnerRadius
         {
@@ -477,9 +477,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The outer radius of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
+        Description("The outer radius of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
         [DefaultValue(m_DefaultScaleLinesInterOuterRadius)]
         public Int32 ScaleLinesInterOuterRadius
         {
@@ -495,9 +495,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The width of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
+        Description("The width of the inter scale lines which are the middle scale lines for an uneven number of minor scale lines.")]
         [DefaultValue(m_DefaultScaleLinesInterWidth)]
         public Int32 ScaleLinesInterWidth
         {
@@ -513,9 +513,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The number of minor scale lines.")]
+        Description("The number of minor scale lines.")]
         [DefaultValue(m_DefaultScaleLinesMinorTicks)]
         public Int32 ScaleLinesMinorTicks
         {
@@ -531,9 +531,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Colors),
-        System.ComponentModel.Description("The color of the minor scale lines.")]
+        Description("The color of the minor scale lines.")]
         [DefaultValue(typeof(Color), "Gray")]
         public Color ScaleLinesMinorColor
         {
@@ -549,9 +549,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The inner radius of the minor scale lines.")]
+        Description("The inner radius of the minor scale lines.")]
         [DefaultValue(m_DefaultScaleLinesMinorInnerRadius)]
         public Int32 ScaleLinesMinorInnerRadius
         {
@@ -567,9 +567,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The outer radius of the minor scale lines.")]
+        Description("The outer radius of the minor scale lines.")]
         [DefaultValue(m_DefaultScaleLinesMinorOuterRadius)]
         public Int32 ScaleLinesMinorOuterRadius
         {
@@ -585,9 +585,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The width of the minor scale lines.")]
+        Description("The width of the minor scale lines.")]
         [DefaultValue(m_DefaultScaleLinesMinorWidth)]
         public Int32 ScaleLinesMinorWidth
         {
@@ -603,9 +603,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The step value of the major scale lines.")]
+        Description("The step value of the major scale lines.")]
         [DefaultValue(m_DefaultScaleLinesMajorStepValue)]
         public Single ScaleLinesMajorStepValue
         {
@@ -621,9 +621,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Colors),
-        System.ComponentModel.Description("The color of the major scale lines.")]
+        Description("The color of the major scale lines.")]
         [DefaultValue(typeof(Color), "Black")]
         public Color ScaleLinesMajorColor
         {
@@ -639,9 +639,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The inner radius of the major scale lines.")]
+        Description("The inner radius of the major scale lines.")]
         [DefaultValue(m_DefaultScaleLinesMajorInnerRadius)]
         public Int32 ScaleLinesMajorInnerRadius
         {
@@ -657,9 +657,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The outer radius of the major scale lines.")]
+        Description("The outer radius of the major scale lines.")]
         [DefaultValue(m_DefaultScaleLinesMajorOuterRadius)]
         public Int32 ScaleLinesMajorOuterRadius
         {
@@ -675,9 +675,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Scale),
-        System.ComponentModel.Description("The width of the major scale lines.")]
+        Description("The width of the major scale lines.")]
         [DefaultValue(m_DefaultScaleLinesMajorWidth)]
         public Int32 ScaleLinesMajorWidth
         {
@@ -697,9 +697,9 @@ namespace System.Windows.Forms
 
         #region << Gauge Scale Numbers >>
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Labels),
-        System.ComponentModel.Description("The radius of the scale numbers.")]
+        Description("The radius of the scale numbers.")]
         [DefaultValue(m_DefaultScaleNumbersRadius)]
         public Int32 ScaleNumbersRadius
         {
@@ -715,9 +715,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Colors),
-        System.ComponentModel.Description("The color of the scale numbers.")]
+        Description("The color of the scale numbers.")]
         [DefaultValue(typeof(Color), "Black")]
         public Color ScaleNumbersColor
         {
@@ -733,9 +733,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Labels),
-        System.ComponentModel.Description("The format of the scale numbers.")]
+        Description("The format of the scale numbers.")]
         [DefaultValue("")]
         public String ScaleNumbersFormat
         {
@@ -751,9 +751,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Labels),
-        System.ComponentModel.Description("The number of the scale line to start writing numbers next to.")]
+        Description("The number of the scale line to start writing numbers next to.")]
         [DefaultValue(m_DefaultScaleNumbersStartScaleLine)]
         public Int32 ScaleNumbersStartScaleLine
         {
@@ -769,9 +769,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Labels),
-        System.ComponentModel.Description("The number of scale line steps for writing numbers.")]
+        Description("The number of scale line steps for writing numbers.")]
         [DefaultValue(m_DefaultScaleNumbersStepScaleLines)]
         public Int32 ScaleNumbersStepScaleLines
         {
@@ -787,9 +787,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Labels),
-        System.ComponentModel.Description("The angle relative to the tangent of the base arc at a scale line that is used to rotate numbers. set to 0 for no rotation or e.g. set to 90.")]
+        Description("The angle relative to the tangent of the base arc at a scale line that is used to rotate numbers. set to 0 for no rotation or e.g. set to 90.")]
         [DefaultValue(m_DefaultScaleNumbersRotation)]
         public Int32 ScaleNumbersRotation
         {
@@ -809,9 +809,9 @@ namespace System.Windows.Forms
 
         #region << Gauge Needle >>
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Needle),
-        System.ComponentModel.Description("The type of the needle, currently only type 0 and 1 are supported. Type 0 looks nicers but if you experience performance problems you might consider using type 1.")]
+        Description("The type of the needle, currently only type 0 and 1 are supported. Type 0 looks nicers but if you experience performance problems you might consider using type 1.")]
         [DefaultValue(typeof(NeedleType), nameof(NeedleType.Advance))]
         public NeedleType NeedleType
         {
@@ -827,9 +827,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Needle),
-        System.ComponentModel.Description("The radius of the needle.")]
+        Description("The radius of the needle.")]
         [DefaultValue(m_DefaultNeedleRadius)]
         public Int32 NeedleRadius
         {
@@ -845,9 +845,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Colors),
-        System.ComponentModel.Description("The first color of the needle.")]
+        Description("The first color of the needle.")]
         [DefaultValue(typeof(AGaugeNeedleColor), nameof(AGaugeNeedleColor.Gray))]
         public AGaugeNeedleColor NeedleColor1
         {
@@ -863,9 +863,9 @@ namespace System.Windows.Forms
             }
         }
 
-        [System.ComponentModel.Browsable(true),
+        [Browsable(true),
         Category(Categories.Colors),
-        System.ComponentModel.Description("The second color of the needle.")]
+        Description("The second color of the needle.")]
         [DefaultValue(typeof(Color), nameof(Color.DimGray))]
         public Color NeedleColor2
         {
@@ -1483,6 +1483,6 @@ namespace System.Windows.Forms
     }
 
 
-    [System.Runtime.CompilerServices.CompilerGenerated]
+    [Runtime.CompilerServices.CompilerGenerated]
     class NamespaceDoc { } //Namespace Documentation
 }
