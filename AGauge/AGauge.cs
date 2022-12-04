@@ -139,11 +139,6 @@ namespace System.Windows.Forms
 
         [Description("This event is raised if the value is entering or leaving defined range.")]
         public event EventHandler<ValueInRangeChangedEventArgs> ValueInRangeChanged;
-        private void OnValueInRangeChanged(AGaugeRange range, Single value)
-        {
-            EventHandler<ValueInRangeChangedEventArgs> e = ValueInRangeChanged;
-            if (e != null) e(this, new ValueInRangeChangedEventArgs(range, value, range.InRange));
-        }
 
         #endregion
 
@@ -226,7 +221,8 @@ namespace System.Windows.Forms
                             if (!ptrRange.InRange)
                             {
                                 ptrRange.InRange = true;
-                                OnValueInRangeChanged(ptrRange, m_value);
+                                ValueInRangeChanged.Invoke(this,
+                                    new ValueInRangeChangedEventArgs(ptrRange, m_value, ptrRange.InRange));
                             }
                         }
                         else
@@ -235,7 +231,8 @@ namespace System.Windows.Forms
                             if (ptrRange.InRange)
                             {
                                 ptrRange.InRange = false;
-                                OnValueInRangeChanged(ptrRange, m_value);
+                                ValueInRangeChanged.Invoke(this,
+                                    new ValueInRangeChangedEventArgs(ptrRange, m_value, ptrRange.InRange));
                             }
                         }
                     }
