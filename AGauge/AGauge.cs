@@ -136,11 +136,6 @@ namespace System.Windows.Forms
 
         [Description("This event is raised when gauge value changed.")]
         public event EventHandler ValueChanged;
-        private void OnValueChanged()
-        {
-            EventHandler e = ValueChanged;
-            if (e != null) e(this, null);
-        }
 
         [Description("This event is raised if the value is entering or leaving defined range.")]
         public event EventHandler<ValueInRangeChangedEventArgs> ValueInRangeChanged;
@@ -218,7 +213,7 @@ namespace System.Windows.Forms
                 if (m_value != value)
                 {
                     m_value = value;
-                    OnValueChanged();
+                    ValueChanged?.Invoke(this, EventArgs.Empty);
 
                     if (this.DesignMode) drawGaugeBackground = true;
 
