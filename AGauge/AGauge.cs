@@ -1182,6 +1182,8 @@ namespace System.Windows.Forms
                     break;
             }
             #endregion
+
+            PostRender(e.Graphics, center, centerFactor);
         }
 
         private Color GetColor(AGaugeNeedleColor clr)
@@ -1245,6 +1247,8 @@ namespace System.Windows.Forms
         #endregion
 
         #region Render components
+
+
 
         public Bitmap BackgroundPreRender(Graphics graphics, Point center, float centerFactor)
         {
@@ -1500,6 +1504,11 @@ namespace System.Windows.Forms
                     graphics.DrawArc(pnArc, new Rectangle(center.X - baseArcRadius, center.Y - baseArcRadius, 2 * baseArcRadius, 2 * baseArcRadius), m_BaseArcStart, m_BaseArcSweep);
                 }
             }
+        }
+
+        public void PostRender(Graphics graphics, Point center, float centerFactor)
+        {
+
         }
 
         #endregion
