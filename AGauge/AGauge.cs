@@ -264,14 +264,14 @@ namespace System.Windows.Forms
         Description("Gauge Ranges.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public AGaugeRangeCollection GaugeRanges => _GaugeRanges;
-        private AGaugeRangeCollection _GaugeRanges;
+        private readonly AGaugeRangeCollection _GaugeRanges;
 
         [Browsable(true),
         Category(Categories.Appearance),
         Description("Gauge Labels.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public AGaugeLabelCollection GaugeLabels => _GaugeLabels;
-        private AGaugeLabelCollection _GaugeLabels;
+        private readonly AGaugeLabelCollection _GaugeLabels;
 
         #region << Gauge Base >>
         [Browsable(true),
