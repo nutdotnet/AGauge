@@ -1349,15 +1349,8 @@ namespace System.Windows.Forms
                 }
                 #endregion
 
-                ggr.SetClip(ClientRectangle);
-                if (m_BaseArcRadius > 0)
-                {
-                    int baseArcRadius = (int)(m_BaseArcRadius * centerFactor);
-                    using (var pnArc = new Pen(m_BaseArcColor, (int)(m_BaseArcWidth * centerFactor)))
-                    {
-                        ggr.DrawArc(pnArc, new Rectangle(center.X - baseArcRadius, center.Y - baseArcRadius, 2 * baseArcRadius, 2 * baseArcRadius), m_BaseArcStart, m_BaseArcSweep);
-                    }
-                }
+                graphics.SetClip(ClientRectangle);
+                RenderDefaultArc(ggr, center, centerFactor);
 
                 #region ScaleNumbers
                 String valueText = "";
@@ -1495,6 +1488,18 @@ namespace System.Windows.Forms
             }
 
             return gaugeBitmap;
+        }
+
+        public void RenderDefaultArc(Graphics graphics, Point center, float centerFactor)
+        {
+            if (m_BaseArcRadius > 0)
+            {
+                int baseArcRadius = (int)(m_BaseArcRadius * centerFactor);
+                using (var pnArc = new Pen(m_BaseArcColor, (int)(m_BaseArcWidth * centerFactor)))
+                {
+                    graphics.DrawArc(pnArc, new Rectangle(center.X - baseArcRadius, center.Y - baseArcRadius, 2 * baseArcRadius, 2 * baseArcRadius), m_BaseArcStart, m_BaseArcSweep);
+                }
+            }
         }
 
         #endregion
