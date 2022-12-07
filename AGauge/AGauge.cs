@@ -136,8 +136,18 @@ namespace System.Windows.Forms
         [Description("This event is raised when gauge value changed.")]
         public event EventHandler ValueChanged;
 
+        protected virtual void OnValueChanged(object sender, EventArgs e)
+        {
+            ValueChanged?.Invoke(sender, e);
+        }
+
         [Description("This event is raised if the value is entering or leaving defined range.")]
         public event EventHandler<ValueInRangeChangedEventArgs> ValueInRangeChanged;
+
+        protected virtual void OnValueInRangeChanged(object sender, ValueInRangeChangedEventArgs e)
+        {
+            ValueInRangeChanged?.Invoke(sender, e);
+        }
 
         #endregion
 
@@ -207,7 +217,7 @@ namespace System.Windows.Forms
                 if (m_value != value)
                 {
                     m_value = value;
-                    ValueChanged?.Invoke(this, EventArgs.Empty);
+                    OnValueChanged(this, EventArgs.Empty);
 
                     if (this.DesignMode) drawGaugeBackground = true;
 
@@ -220,7 +230,7 @@ namespace System.Windows.Forms
                             if (!ptrRange.InRange)
                             {
                                 ptrRange.InRange = true;
-                                ValueInRangeChanged.Invoke(this,
+                                OnValueInRangeChanged(this,
                                     new ValueInRangeChangedEventArgs(ptrRange, m_value, ptrRange.InRange));
                             }
                         }
@@ -230,7 +240,7 @@ namespace System.Windows.Forms
                             if (ptrRange.InRange)
                             {
                                 ptrRange.InRange = false;
-                                ValueInRangeChanged.Invoke(this,
+                                OnValueInRangeChanged(this,
                                     new ValueInRangeChangedEventArgs(ptrRange, m_value, ptrRange.InRange));
                             }
                         }
