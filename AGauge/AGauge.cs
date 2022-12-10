@@ -1260,12 +1260,12 @@ namespace System.Windows.Forms
 
 
 
-        public Bitmap BackgroundPreRender(Graphics graphics, Point center, float centerFactor)
+        public virtual Bitmap BackgroundPreRender(Graphics graphics, Point center, float centerFactor)
         {
             return new Bitmap(Width, Height, graphics);
         }
 
-        public Bitmap BackgroundPostRender(Graphics graphics, Point center, float centerFactor)
+        public virtual Bitmap BackgroundPostRender(Graphics graphics, Point center, float centerFactor)
         {
             return new Bitmap(Width, Height, graphics);
         }
@@ -1504,7 +1504,7 @@ namespace System.Windows.Forms
             return gaugeBitmap;
         }
 
-        public void RenderDefaultArc(Graphics graphics, Point center, float centerFactor)
+        public virtual void RenderDefaultArc(Graphics graphics, Point center, float centerFactor)
         {
             if (m_BaseArcRadius > 0)
             {
@@ -1516,7 +1516,7 @@ namespace System.Windows.Forms
             }
         }
 
-        public void PostRender(Graphics graphics, Point center, float centerFactor)
+        public virtual void PostRender(Graphics graphics, Point center, float centerFactor)
         {
 
         }
