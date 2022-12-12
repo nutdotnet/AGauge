@@ -56,7 +56,7 @@ namespace System.Windows.Forms
         private Boolean drawGaugeBackground = true;
 
         private Single m_value;
-        private Point m_Center = new Point(100, 100);
+        private bool drawCenter = false;
         private Single m_MinValue = m_DefaultMinValue;
         private Single m_MaxValue = m_DefaultMaxValue;
 
@@ -154,9 +154,10 @@ namespace System.Windows.Forms
         #region Hidden and overridden inherited properties
 
         public new Boolean AllowDrop { get { return false; } set { /*Do Nothing */ } }
-        //public new Boolean AutoSize { get { return false; } set { /*Do Nothing */ } }
+        public new Boolean AutoSize { get { return base.AutoSize; } set { /*Do Nothing */ } }
         public new Boolean ForeColor { get { return false; } set { /*Do Nothing */ } }
         public new Boolean ImeMode { get { return false; } set { /*Do Nothing */ } }
+
         public override Color BackColor
         {
             get { return base.BackColor; }
@@ -252,24 +253,6 @@ namespace System.Windows.Forms
 
         [Browsable(true),
         Category(Categories.Appearance),
-        Description("Auto size Mode of the gauge.")]
-        [DefaultValue(false)]
-        public Boolean GaugeAutoSize
-        {
-            get
-            {
-                return base.AutoSize;
-            }
-            set
-            {
-                base.AutoSize = value;
-                drawGaugeBackground = true;
-                Refresh();
-            }
-        }
-
-        [Browsable(true),
-        Category(Categories.Appearance),
         Description("Gauge Ranges.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public AGaugeRangeCollection GaugeRanges => _GaugeRanges;
@@ -283,22 +266,9 @@ namespace System.Windows.Forms
         private readonly AGaugeLabelCollection _GaugeLabels;
 
         #region << Gauge Base >>
-        [Browsable(true),
-        Category(Categories.Appearance),
-        Description("The center of the gauge (in the control's client area)."),
-        DefaultValue(typeof(Point), "100, 100")]
         public Point Center
         {
-            get { return m_Center; }
-            set
-            {
-                if (m_Center != value)
-                {
-                    m_Center = value;
-                    drawGaugeBackground = true;
-                    Refresh();
-                }
-            }
+            get { return new Point(Size.Width / 2, Size.Height / 2); }
         }
 
         [Browsable(true),
@@ -1004,35 +974,28 @@ namespace System.Windows.Forms
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
+
         }
         protected override void OnPaint(PaintEventArgs e)
         {
+            base.OnPaint(e);
+
             if ((Width < 10) || (Height < 10))
             {
                 return;
             }
 
-            #region AutoSize
-            Single centerFactor = 1;
-            var center = Center;
-
-
-            if (AutoSize)
-            {
-                double widthFactor = ((1.0 / (double)(2 * Center.X)) * (double)Size.Width);
-                double heightFactor = ((1.0 / (double)(2 * Center.Y)) * (double)Size.Height);
-                centerFactor = (float)Math.Min(widthFactor, heightFactor);
-                center = new Point((int)(Center.X * widthFactor), (int)(Center.Y * heightFactor));
-            }
-            #endregion
+            double widthFactor = ((1.0 / (2 * Center.X)) * Size.Width);
+            double heightFactor = ((1.0 / (2 * Center.Y)) * Size.Height);
+            float centerFactor = (float)Math.Min(widthFactor, heightFactor);
 
             #region drawGaugeBackground
             if (drawGaugeBackground)
             {
                 drawGaugeBackground = false;
-                e.Graphics.DrawImageUnscaled(BackgroundPreRender(e.Graphics, center, centerFactor), 0, 0);
-                e.Graphics.DrawImageUnscaled(RenderDefaultBackground(e.Graphics, center, centerFactor), 0, 0);
-                e.Graphics.DrawImageUnscaled(BackgroundPostRender(e.Graphics, center, centerFactor), 0, 0);
+                e.Graphics.DrawImageUnscaled(BackgroundPreRender(e.Graphics, Center, centerFactor), 0, 0);
+                e.Graphics.DrawImageUnscaled(RenderDefaultBackground(e.Graphics, Center, centerFactor), 0, 0);
+                e.Graphics.DrawImageUnscaled(BackgroundPostRender(e.Graphics, Center, centerFactor), 0, 0);
             }
             #endregion
 
@@ -1056,7 +1019,7 @@ namespace System.Windows.Forms
 
                     using (var brNeedle = new SolidBrush(m_NeedleColor2))
                     {
-                        e.Graphics.FillEllipse(brNeedle, center.X - needleWidth * 3, center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
+                        e.Graphics.FillEllipse(brNeedle, Center.X - needleWidth * 3, Center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
                     }
 
                     Color clr1 = Color.White;
@@ -1071,56 +1034,56 @@ namespace System.Windows.Forms
                             clr2 = Color.FromArgb(180 - subcol, 180 - subcol, 180 - subcol);
                             clr3 = Color.FromArgb(80 + subcol2, 80 + subcol2, 80 + subcol2);
                             clr4 = Color.FromArgb(180 - subcol2, 180 - subcol2, 180 - subcol2);
-                            e.Graphics.DrawEllipse(Pens.Gray, center.X - needleWidth * 3, center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
+                            e.Graphics.DrawEllipse(Pens.Gray, Center.X - needleWidth * 3, Center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
                             break;
                         case AGaugeNeedleColor.Red:
                             clr1 = Color.FromArgb(145 + subcol, subcol, subcol);
                             clr2 = Color.FromArgb(245 - subcol, 100 - subcol, 100 - subcol);
                             clr3 = Color.FromArgb(145 + subcol2, subcol2, subcol2);
                             clr4 = Color.FromArgb(245 - subcol2, 100 - subcol2, 100 - subcol2);
-                            e.Graphics.DrawEllipse(Pens.Red, center.X - needleWidth * 3, center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
+                            e.Graphics.DrawEllipse(Pens.Red, Center.X - needleWidth * 3, Center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
                             break;
                         case AGaugeNeedleColor.Green:
                             clr1 = Color.FromArgb(subcol, 145 + subcol, subcol);
                             clr2 = Color.FromArgb(100 - subcol, 245 - subcol, 100 - subcol);
                             clr3 = Color.FromArgb(subcol2, 145 + subcol2, subcol2);
                             clr4 = Color.FromArgb(100 - subcol2, 245 - subcol2, 100 - subcol2);
-                            e.Graphics.DrawEllipse(Pens.Green, center.X - needleWidth * 3, center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
+                            e.Graphics.DrawEllipse(Pens.Green, Center.X - needleWidth * 3, Center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
                             break;
                         case AGaugeNeedleColor.Blue:
                             clr1 = Color.FromArgb(subcol, subcol, 145 + subcol);
                             clr2 = Color.FromArgb(100 - subcol, 100 - subcol, 245 - subcol);
                             clr3 = Color.FromArgb(subcol2, subcol2, 145 + subcol2);
                             clr4 = Color.FromArgb(100 - subcol2, 100 - subcol2, 245 - subcol2);
-                            e.Graphics.DrawEllipse(Pens.Blue, center.X - needleWidth * 3, center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
+                            e.Graphics.DrawEllipse(Pens.Blue, Center.X - needleWidth * 3, Center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
                             break;
                         case AGaugeNeedleColor.Magenta:
                             clr1 = Color.FromArgb(subcol, 145 + subcol, 145 + subcol);
                             clr2 = Color.FromArgb(100 - subcol, 245 - subcol, 245 - subcol);
                             clr3 = Color.FromArgb(subcol2, 145 + subcol2, 145 + subcol2);
                             clr4 = Color.FromArgb(100 - subcol2, 245 - subcol2, 245 - subcol2);
-                            e.Graphics.DrawEllipse(Pens.Magenta, center.X - needleWidth * 3, center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
+                            e.Graphics.DrawEllipse(Pens.Magenta, Center.X - needleWidth * 3, Center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
                             break;
                         case AGaugeNeedleColor.Violet:
                             clr1 = Color.FromArgb(145 + subcol, subcol, 145 + subcol);
                             clr2 = Color.FromArgb(245 - subcol, 100 - subcol, 245 - subcol);
                             clr3 = Color.FromArgb(145 + subcol2, subcol2, 145 + subcol2);
                             clr4 = Color.FromArgb(245 - subcol2, 100 - subcol2, 245 - subcol2);
-                            e.Graphics.DrawEllipse(Pens.Violet, center.X - needleWidth * 3, center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
+                            e.Graphics.DrawEllipse(Pens.Violet, Center.X - needleWidth * 3, Center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
                             break;
                         case AGaugeNeedleColor.Yellow:
                             clr1 = Color.FromArgb(145 + subcol, 145 + subcol, subcol);
                             clr2 = Color.FromArgb(245 - subcol, 245 - subcol, 100 - subcol);
                             clr3 = Color.FromArgb(145 + subcol2, 145 + subcol2, subcol2);
                             clr4 = Color.FromArgb(245 - subcol2, 245 - subcol2, 100 - subcol2);
-                            e.Graphics.DrawEllipse(Pens.Violet, center.X - needleWidth * 3, center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
+                            e.Graphics.DrawEllipse(Pens.Violet, Center.X - needleWidth * 3, Center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
                             break;
                         case AGaugeNeedleColor.White:
                             clr1 = Color.FromArgb(80 + subcol, 80 + subcol, 80 + subcol);
                             clr2 = Color.FromArgb(255 - subcol, 255 - subcol, 255 - subcol);
                             clr3 = Color.FromArgb(80 + subcol2, 80 + subcol2, 80 + subcol2);
                             clr4 = Color.FromArgb(255 - subcol2, 255 - subcol2, 255 - subcol2);
-                            //e.Graphics.DrawEllipse(Pens.Violet, center.X - needleWidth * 3, center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
+                            //e.Graphics.DrawEllipse(Pens.Violet, Center.X - needleWidth * 3, Center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
                             break;
                     }
 
@@ -1141,59 +1104,73 @@ namespace System.Windows.Forms
                     using (Brush brush3 = new SolidBrush(clr3))
                     using (Brush brush4 = new SolidBrush(clr4))
                     {
-                        points[0].X = (Single)(center.X + needleRadius * Math.Cos(needleAngle));
-                        points[0].Y = (Single)(center.Y + needleRadius * Math.Sin(needleAngle));
-                        points[1].X = (Single)(center.X - needleRadius / 20 * Math.Cos(needleAngle));
-                        points[1].Y = (Single)(center.Y - needleRadius / 20 * Math.Sin(needleAngle));
-                        points[2].X = (Single)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle + Math.PI / 2));
-                        points[2].Y = (Single)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle + Math.PI / 2));
+                        points[0].X = (Single)(Center.X + needleRadius * Math.Cos(needleAngle));
+                        points[0].Y = (Single)(Center.Y + needleRadius * Math.Sin(needleAngle));
+                        points[1].X = (Single)(Center.X - needleRadius / 20 * Math.Cos(needleAngle));
+                        points[1].Y = (Single)(Center.Y - needleRadius / 20 * Math.Sin(needleAngle));
+                        points[2].X = (Single)(Center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle + Math.PI / 2));
+                        points[2].Y = (Single)(Center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle + Math.PI / 2));
                         e.Graphics.FillPolygon(brush1, points);
 
-                        points[2].X = (Single)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle - Math.PI / 2));
-                        points[2].Y = (Single)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle - Math.PI / 2));
+                        points[2].X = (Single)(Center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle - Math.PI / 2));
+                        points[2].Y = (Single)(Center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle - Math.PI / 2));
                         e.Graphics.FillPolygon(brush2, points);
 
-                        points[0].X = (Single)(center.X - (needleRadius / 20 - 1) * Math.Cos(needleAngle));
-                        points[0].Y = (Single)(center.Y - (needleRadius / 20 - 1) * Math.Sin(needleAngle));
-                        points[1].X = (Single)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle + Math.PI / 2));
-                        points[1].Y = (Single)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle + Math.PI / 2));
-                        points[2].X = (Single)(center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle - Math.PI / 2));
-                        points[2].Y = (Single)(center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle - Math.PI / 2));
+                        points[0].X = (Single)(Center.X - (needleRadius / 20 - 1) * Math.Cos(needleAngle));
+                        points[0].Y = (Single)(Center.Y - (needleRadius / 20 - 1) * Math.Sin(needleAngle));
+                        points[1].X = (Single)(Center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle + Math.PI / 2));
+                        points[1].Y = (Single)(Center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle + Math.PI / 2));
+                        points[2].X = (Single)(Center.X - needleRadius / 5 * Math.Cos(needleAngle) + needleWidth * 2 * Math.Cos(needleAngle - Math.PI / 2));
+                        points[2].Y = (Single)(Center.Y - needleRadius / 5 * Math.Sin(needleAngle) + needleWidth * 2 * Math.Sin(needleAngle - Math.PI / 2));
                         e.Graphics.FillPolygon(brush4, points);
 
-                        points[0].X = (Single)(center.X - needleRadius / 20 * Math.Cos(needleAngle));
-                        points[0].Y = (Single)(center.Y - needleRadius / 20 * Math.Sin(needleAngle));
-                        points[1].X = (Single)(center.X + needleRadius * Math.Cos(needleAngle));
-                        points[1].Y = (Single)(center.Y + needleRadius * Math.Sin(needleAngle));
+                        points[0].X = (Single)(Center.X - needleRadius / 20 * Math.Cos(needleAngle));
+                        points[0].Y = (Single)(Center.Y - needleRadius / 20 * Math.Sin(needleAngle));
+                        points[1].X = (Single)(Center.X + needleRadius * Math.Cos(needleAngle));
+                        points[1].Y = (Single)(Center.Y + needleRadius * Math.Sin(needleAngle));
 
                         using (var pnNeedle = new Pen(m_NeedleColor2))
                         {
-                            e.Graphics.DrawLine(pnNeedle, center.X, center.Y, points[0].X, points[0].Y);
-                            e.Graphics.DrawLine(pnNeedle, center.X, center.Y, points[1].X, points[1].Y);
+                            e.Graphics.DrawLine(pnNeedle, Center.X, Center.Y, points[0].X, points[0].Y);
+                            e.Graphics.DrawLine(pnNeedle, Center.X, Center.Y, points[1].X, points[1].Y);
                         }
                     }
                     break;
                 case NeedleType.Simple:
-                    Point startPoint = new Point((Int32)(center.X - needleRadius / 8 * Math.Cos(needleAngle)),
-                            (Int32)(center.Y - needleRadius / 8 * Math.Sin(needleAngle)));
-                    Point endPoint = new Point((Int32)(center.X + needleRadius * Math.Cos(needleAngle)),
-                                             (Int32)(center.Y + needleRadius * Math.Sin(needleAngle)));
+                    Point startPoint = new Point((Int32)(Center.X - needleRadius / 8 * Math.Cos(needleAngle)),
+                            (Int32)(Center.Y - needleRadius / 8 * Math.Sin(needleAngle)));
+                    Point endPoint = new Point((Int32)(Center.X + needleRadius * Math.Cos(needleAngle)),
+                                             (Int32)(Center.Y + needleRadius * Math.Sin(needleAngle)));
 
                     using (var brDisk = new SolidBrush(m_NeedleColor2))
                     {
-                        e.Graphics.FillEllipse(brDisk, center.X - needleWidth * 3, center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
+                        e.Graphics.FillEllipse(brDisk, Center.X - needleWidth * 3, Center.Y - needleWidth * 3, needleWidth * 6, needleWidth * 6);
                     }
 
                     using (var pnLine = new Pen(GetColor(m_NeedleColor1), needleWidth))
                     {
-                        e.Graphics.DrawLine(pnLine, center.X, center.Y, endPoint.X, endPoint.Y);
-                        e.Graphics.DrawLine(pnLine, center.X, center.Y, startPoint.X, startPoint.Y);
+                        e.Graphics.DrawLine(pnLine, Center.X, Center.Y, endPoint.X, endPoint.Y);
+                        e.Graphics.DrawLine(pnLine, Center.X, Center.Y, startPoint.X, startPoint.Y);
                     }
                     break;
             }
             #endregion
 
-            PostRender(e.Graphics, center, centerFactor);
+            PostRender(e.Graphics, Center, centerFactor);
+
+#if DEBUG
+            if (drawCenter)
+            {
+
+                using (Pen drawPen = new Pen(Color.Red, 0.1f))
+                {
+                    e.Graphics.DrawLine(drawPen, Center.X, Center.Y - 10, Center.X, Center.Y + 10);
+                    e.Graphics.DrawLine(drawPen, Center.X - 10, Center.Y, Center.X + 10, Center.Y);
+                    // e.Graphics.Flush();
+                }
+            }
+#endif
+
         }
 
         private Color GetColor(AGaugeNeedleColor clr)
@@ -1319,7 +1296,7 @@ namespace System.Windows.Forms
                             }
                             break;
                         case ImageLayout.Zoom:
-                            if ((Single)(BackgroundImage.Width / Width) < (Single)(BackgroundImage.Height / Height))
+                            if (BackgroundImage.Width / Width < (Single)(BackgroundImage.Height / Height))
                             {
                                 ggr.DrawImage(BackgroundImage, 0, 0, Height, Height);
                             }
@@ -1347,17 +1324,17 @@ namespace System.Windows.Forms
                         rangeSweepAngle = (ptrRange.EndValue - ptrRange.StartValue) * m_BaseArcSweep / (m_MaxValue - m_MinValue);
                         gp.Reset();
                         int outerRadius = (int)(ptrRange.OuterRadius * centerFactor);
-                        gp.AddPie(new Rectangle(center.X - outerRadius, center.Y - outerRadius,
+                        gp.AddPie(new Rectangle(Center.X - outerRadius, Center.Y - outerRadius,
                             2 * outerRadius, 2 * outerRadius), rangeStartAngle, rangeSweepAngle);
                         gp.Reverse();
                         int innerRadius = (int)(ptrRange.InnerRadius * centerFactor);
-                        gp.AddPie(new Rectangle(center.X - innerRadius, center.Y - innerRadius,
+                        gp.AddPie(new Rectangle(Center.X - innerRadius, Center.Y - innerRadius,
                             2 * innerRadius, 2 * innerRadius), rangeStartAngle, rangeSweepAngle);
                         gp.Reverse();
                         ggr.SetClip(gp);
                         using (var brRange = new SolidBrush(ptrRange.Color))
                         {
-                            ggr.FillPie(brRange, new Rectangle(center.X - outerRadius, center.Y - outerRadius, 2 * outerRadius, 2 * outerRadius), rangeStartAngle, rangeSweepAngle);
+                            ggr.FillPie(brRange, new Rectangle(Center.X - outerRadius, Center.Y - outerRadius, 2 * outerRadius, 2 * outerRadius), rangeStartAngle, rangeSweepAngle);
                         }
                     }
                 }
@@ -1385,25 +1362,25 @@ namespace System.Windows.Forms
 
                         gp.Reset();
                         int scaleLinesMajorOuterRadius = (int)(m_ScaleLinesMajorOuterRadius * centerFactor);
-                        gp.AddEllipse(new Rectangle(center.X - scaleLinesMajorOuterRadius, center.Y - scaleLinesMajorOuterRadius, 2 * scaleLinesMajorOuterRadius, 2 * scaleLinesMajorOuterRadius));
+                        gp.AddEllipse(new Rectangle(Center.X - scaleLinesMajorOuterRadius, Center.Y - scaleLinesMajorOuterRadius, 2 * scaleLinesMajorOuterRadius, 2 * scaleLinesMajorOuterRadius));
                         gp.Reverse();
                         int scaleLinesMajorInnerRadius = (int)(m_ScaleLinesMajorInnerRadius * centerFactor);
-                        gp.AddEllipse(new Rectangle(center.X - scaleLinesMajorInnerRadius, center.Y - scaleLinesMajorInnerRadius, 2 * scaleLinesMajorInnerRadius, 2 * scaleLinesMajorInnerRadius));
+                        gp.AddEllipse(new Rectangle(Center.X - scaleLinesMajorInnerRadius, Center.Y - scaleLinesMajorInnerRadius, 2 * scaleLinesMajorInnerRadius, 2 * scaleLinesMajorInnerRadius));
                         gp.Reverse();
                         ggr.SetClip(gp);
 
                         ggr.DrawLine(pnMajorScaleLines,
-                        (Single)(center.X),
-                        (Single)(center.Y),
-                        (Single)(center.X + 2 * scaleLinesMajorOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0)),
-                        (Single)(center.Y + 2 * scaleLinesMajorOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0)));
+                        Center.X,
+                        Center.Y,
+                        (Single)(Center.X + 2 * scaleLinesMajorOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0)),
+                        (Single)(Center.Y + 2 * scaleLinesMajorOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0)));
 
                         gp.Reset();
                         int scaleLinesMinorOuterRadius = (int)(m_ScaleLinesMinorOuterRadius * centerFactor);
-                        gp.AddEllipse(new Rectangle(center.X - scaleLinesMinorOuterRadius, center.Y - scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius));
+                        gp.AddEllipse(new Rectangle(Center.X - scaleLinesMinorOuterRadius, Center.Y - scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius));
                         gp.Reverse();
                         int scaleLinesMinorInnerRadius = (int)(m_ScaleLinesMinorInnerRadius * centerFactor);
-                        gp.AddEllipse(new Rectangle(center.X - scaleLinesMinorInnerRadius, center.Y - scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius));
+                        gp.AddEllipse(new Rectangle(Center.X - scaleLinesMinorInnerRadius, Center.Y - scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius));
                         gp.Reverse();
                         ggr.SetClip(gp);
 
@@ -1418,33 +1395,33 @@ namespace System.Windows.Forms
                                     {
                                         gp.Reset();
                                         int scaleLinesInterOuterRadius = (int)(m_ScaleLinesInterOuterRadius * centerFactor);
-                                        gp.AddEllipse(new Rectangle(center.X - scaleLinesInterOuterRadius, center.Y - scaleLinesInterOuterRadius, 2 * scaleLinesInterOuterRadius, 2 * scaleLinesInterOuterRadius));
+                                        gp.AddEllipse(new Rectangle(Center.X - scaleLinesInterOuterRadius, Center.Y - scaleLinesInterOuterRadius, 2 * scaleLinesInterOuterRadius, 2 * scaleLinesInterOuterRadius));
                                         gp.Reverse();
                                         int scaleLinesInterInnerRadius = (int)(m_ScaleLinesInterInnerRadius * centerFactor);
-                                        gp.AddEllipse(new Rectangle(center.X - scaleLinesInterInnerRadius, center.Y - scaleLinesInterInnerRadius, 2 * scaleLinesInterInnerRadius, 2 * scaleLinesInterInnerRadius));
+                                        gp.AddEllipse(new Rectangle(Center.X - scaleLinesInterInnerRadius, Center.Y - scaleLinesInterInnerRadius, 2 * scaleLinesInterInnerRadius, 2 * scaleLinesInterInnerRadius));
                                         gp.Reverse();
                                         ggr.SetClip(gp);
 
                                         ggr.DrawLine(pnScaleLinesInter,
-                                        (Single)(center.X),
-                                        (Single)(center.Y),
-                                        (Single)(center.X + 2 * scaleLinesInterOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)),
-                                        (Single)(center.Y + 2 * scaleLinesInterOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)));
+                                        Center.X,
+                                        Center.Y,
+                                        (Single)(Center.X + 2 * scaleLinesInterOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)),
+                                        (Single)(Center.Y + 2 * scaleLinesInterOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)));
 
                                         gp.Reset();
-                                        gp.AddEllipse(new Rectangle(center.X - scaleLinesMinorOuterRadius, center.Y - scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius));
+                                        gp.AddEllipse(new Rectangle(Center.X - scaleLinesMinorOuterRadius, Center.Y - scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius));
                                         gp.Reverse();
-                                        gp.AddEllipse(new Rectangle(center.X - scaleLinesMinorInnerRadius, center.Y - scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius));
+                                        gp.AddEllipse(new Rectangle(Center.X - scaleLinesMinorInnerRadius, Center.Y - scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius));
                                         gp.Reverse();
                                         ggr.SetClip(gp);
                                     }
                                     else
                                     {
                                         ggr.DrawLine(pnScaleLinesMinorColor,
-                                        (Single)(center.X),
-                                        (Single)(center.Y),
-                                        (Single)(center.X + 2 * scaleLinesMinorOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)),
-                                        (Single)(center.Y + 2 * scaleLinesMinorOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)));
+                                        Center.X,
+                                        Center.Y,
+                                        (Single)(Center.X + 2 * scaleLinesMinorOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)),
+                                        (Single)(Center.Y + 2 * scaleLinesMinorOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue) + counter2 * m_BaseArcSweep / (((Single)((m_MaxValue - m_MinValue) / m_ScaleLinesMajorStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)));
                                     }
                                 }
                             }
@@ -1458,8 +1435,8 @@ namespace System.Windows.Forms
                             ggr.RotateTransform(90.0F + m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue));
                         }
 
-                        ggr.TranslateTransform((Single)(center.X + (m_ScaleNumbersRadius * centerFactor) * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
-                                               (Single)(center.Y + (m_ScaleNumbersRadius * centerFactor) * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
+                        ggr.TranslateTransform((Single)(Center.X + (m_ScaleNumbersRadius * centerFactor) * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
+                                               (Single)(Center.Y + (m_ScaleNumbersRadius * centerFactor) * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
                                                System.Drawing.Drawing2D.MatrixOrder.Append);
 
 
@@ -1493,8 +1470,8 @@ namespace System.Windows.Forms
                         using (var brGaugeLabel = new SolidBrush(ptrGaugeLabel.Color))
                         {
                             ggr.DrawString(ptrGaugeLabel.Text, ptrGaugeLabel.Font, brGaugeLabel,
-                                           (ptrGaugeLabel.Position.X) * centerFactor + center.X,
-                                           (ptrGaugeLabel.Position.Y) * centerFactor + center.Y, Format);
+                                           (ptrGaugeLabel.Position.X) * centerFactor + Center.X,
+                                           (ptrGaugeLabel.Position.Y) * centerFactor + Center.Y, Format);
                         }
                     }
                 }
@@ -1511,7 +1488,7 @@ namespace System.Windows.Forms
                 int baseArcRadius = (int)(m_BaseArcRadius * centerFactor);
                 using (var pnArc = new Pen(m_BaseArcColor, (int)(m_BaseArcWidth * centerFactor)))
                 {
-                    graphics.DrawArc(pnArc, new Rectangle(center.X - baseArcRadius, center.Y - baseArcRadius, 2 * baseArcRadius, 2 * baseArcRadius), m_BaseArcStart, m_BaseArcSweep);
+                    graphics.DrawArc(pnArc, new Rectangle(Center.X - baseArcRadius, Center.Y - baseArcRadius, 2 * baseArcRadius, 2 * baseArcRadius), m_BaseArcStart, m_BaseArcSweep);
                 }
             }
         }

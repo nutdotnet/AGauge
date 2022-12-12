@@ -91,7 +91,6 @@
             this.aGauge1.BaseArcSweep = 270;
             this.aGauge1.BaseArcWidth = 2;
             this.aGauge1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.aGauge1.GaugeAutoSize = true;
             aGaugeLabel1.Color = System.Drawing.SystemColors.WindowText;
             aGaugeLabel1.Font = new System.Drawing.Font("Verdana", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             aGaugeLabel1.Name = "GaugeLabel1";
