@@ -51,9 +51,9 @@ namespace System.Windows.Forms
         /// </summary>
         private bool m_bInitializing = false;
 
-        double widthFactor;
-        double heightFactor;
-        float centerFactor;
+        protected double widthFactor;
+        protected double heightFactor;
+        protected float centerFactor;
 
         private Single fontBoundY1;
         private Single fontBoundY2;
@@ -1117,7 +1117,7 @@ namespace System.Windows.Forms
             }
             #endregion
 
-            PostRender(e.Graphics, Center, centerFactor);
+            PostRender(e.Graphics);
 
 #if DEBUG
             if (drawCenter)
@@ -1298,7 +1298,7 @@ namespace System.Windows.Forms
                 #endregion
 
                 ggr.SetClip(ClientRectangle);
-                RenderDefaultArc(ggr, Center, centerFactor);
+                RenderDefaultArc(ggr);
 
                 #region ScaleNumbers
                 String valueText = "";
@@ -1436,7 +1436,7 @@ namespace System.Windows.Forms
             }
         }
 
-        public virtual void RenderDefaultArc(Graphics graphics, Point center, float centerFactor)
+        public virtual void RenderDefaultArc(Graphics graphics)
         {
             if (m_BaseArcRadius > 0)
             {
@@ -1448,10 +1448,7 @@ namespace System.Windows.Forms
             }
         }
 
-        public virtual void PostRender(Graphics graphics, Point center, float centerFactor)
-        {
-
-        }
+        public virtual void PostRender(Graphics graphics) { }
 
         #endregion
     }
