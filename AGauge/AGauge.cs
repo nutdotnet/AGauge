@@ -57,8 +57,7 @@ namespace System.Windows.Forms
 
         private Single fontBoundY1;
         private Single fontBoundY2;
-        private Boolean drawGaugeBackground = true;
-        private bool drawCenter = false;
+        private bool drawCenter = true;
 
         private Single m_value;
         private Single m_MinValue = m_DefaultMinValue;
@@ -168,7 +167,6 @@ namespace System.Windows.Forms
             set
             {
                 base.BackColor = value;
-                drawGaugeBackground = true;
                 Refresh();
             }
         }
@@ -178,7 +176,6 @@ namespace System.Windows.Forms
             set
             {
                 base.Font = value;
-                drawGaugeBackground = true;
                 Refresh();
             }
         }
@@ -188,7 +185,6 @@ namespace System.Windows.Forms
             set
             {
                 base.BackgroundImageLayout = value;
-                drawGaugeBackground = true;
                 Refresh();
             }
         }
@@ -224,8 +220,6 @@ namespace System.Windows.Forms
                 {
                     m_value = value;
                     OnValueChanged(this, EventArgs.Empty);
-
-                    if (this.DesignMode) drawGaugeBackground = true;
 
                     foreach (AGaugeRange ptrRange in _GaugeRanges)
                     {
@@ -288,7 +282,6 @@ namespace System.Windows.Forms
                 if (m_BaseArcColor != value)
                 {
                     m_BaseArcColor = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -306,7 +299,6 @@ namespace System.Windows.Forms
                 if (m_BaseArcRadius != value)
                 {
                     m_BaseArcRadius = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -324,7 +316,6 @@ namespace System.Windows.Forms
                 if (m_BaseArcStart != value)
                 {
                     m_BaseArcStart = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -342,7 +333,6 @@ namespace System.Windows.Forms
                 if (m_BaseArcSweep != value)
                 {
                     m_BaseArcSweep = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -360,7 +350,6 @@ namespace System.Windows.Forms
                 if (m_BaseArcWidth != value)
                 {
                     m_BaseArcWidth = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -391,7 +380,6 @@ namespace System.Windows.Forms
                 }
 
                 m_ScaleLinesMajorStepValue = Math.Min(m_ScaleLinesMajorStepValue, m_MaxValue - m_MinValue);
-                drawGaugeBackground = true;
                 Refresh();
             }
         }
@@ -417,7 +405,6 @@ namespace System.Windows.Forms
                 }
 
                 m_ScaleLinesMajorStepValue = Math.Min(m_ScaleLinesMajorStepValue, m_MaxValue - m_MinValue);
-                drawGaugeBackground = true;
                 Refresh();
             }
         }
@@ -434,7 +421,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesInterColor != value)
                 {
                     m_ScaleLinesInterColor = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -452,7 +438,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesInterInnerRadius != value)
                 {
                     m_ScaleLinesInterInnerRadius = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -470,7 +455,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesInterOuterRadius != value)
                 {
                     m_ScaleLinesInterOuterRadius = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -488,7 +472,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesInterWidth != value)
                 {
                     m_ScaleLinesInterWidth = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -506,7 +489,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesMinorTicks != value)
                 {
                     m_ScaleLinesMinorTicks = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -524,7 +506,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesMinorColor != value)
                 {
                     m_ScaleLinesMinorColor = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -542,7 +523,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesMinorInnerRadius != value)
                 {
                     m_ScaleLinesMinorInnerRadius = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -560,7 +540,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesMinorOuterRadius != value)
                 {
                     m_ScaleLinesMinorOuterRadius = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -578,7 +557,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesMinorWidth != value)
                 {
                     m_ScaleLinesMinorWidth = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -596,7 +574,6 @@ namespace System.Windows.Forms
                 if ((m_ScaleLinesMajorStepValue != value) && (value > 0))
                 {
                     m_ScaleLinesMajorStepValue = Math.Min(value, m_MaxValue - m_MinValue);
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -614,7 +591,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesMajorColor != value)
                 {
                     m_ScaleLinesMajorColor = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -632,7 +608,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesMajorInnerRadius != value)
                 {
                     m_ScaleLinesMajorInnerRadius = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -650,7 +625,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesMajorOuterRadius != value)
                 {
                     m_ScaleLinesMajorOuterRadius = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -668,7 +642,6 @@ namespace System.Windows.Forms
                 if (m_ScaleLinesMajorWidth != value)
                 {
                     m_ScaleLinesMajorWidth = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -690,7 +663,6 @@ namespace System.Windows.Forms
                 if (m_ScaleNumbersRadius != value)
                 {
                     m_ScaleNumbersRadius = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -708,7 +680,6 @@ namespace System.Windows.Forms
                 if (m_ScaleNumbersColor != value)
                 {
                     m_ScaleNumbersColor = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -726,7 +697,6 @@ namespace System.Windows.Forms
                 if (m_ScaleNumbersFormat != value)
                 {
                     m_ScaleNumbersFormat = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -744,7 +714,6 @@ namespace System.Windows.Forms
                 if (m_ScaleNumbersStartScaleLine != value)
                 {
                     m_ScaleNumbersStartScaleLine = Math.Max(value, 1);
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -762,7 +731,6 @@ namespace System.Windows.Forms
                 if (m_ScaleNumbersStepScaleLines != value)
                 {
                     m_ScaleNumbersStepScaleLines = Math.Max(value, 1);
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -780,7 +748,6 @@ namespace System.Windows.Forms
                 if (m_ScaleNumbersRotation != value)
                 {
                     m_ScaleNumbersRotation = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -802,7 +769,6 @@ namespace System.Windows.Forms
                 if (m_NeedleType != value)
                 {
                     m_NeedleType = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -820,7 +786,6 @@ namespace System.Windows.Forms
                 if (m_NeedleRadius != value)
                 {
                     m_NeedleRadius = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -838,7 +803,6 @@ namespace System.Windows.Forms
                 if (m_NeedleColor1 != value)
                 {
                     m_NeedleColor1 = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -856,7 +820,6 @@ namespace System.Windows.Forms
                 if (m_NeedleColor2 != value)
                 {
                     m_NeedleColor2 = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -874,7 +837,6 @@ namespace System.Windows.Forms
                 if (m_NeedleWidth != value)
                 {
                     m_NeedleWidth = value;
-                    drawGaugeBackground = true;
                     Refresh();
                 }
             }
@@ -955,7 +917,6 @@ namespace System.Windows.Forms
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public void RepaintControl()
         {
-            drawGaugeBackground = true;
             Refresh();
         }
 
@@ -1201,7 +1162,6 @@ namespace System.Windows.Forms
 
         protected override void OnResize(EventArgs e)
         {
-            drawGaugeBackground = true;
             Refresh();
         }
 
