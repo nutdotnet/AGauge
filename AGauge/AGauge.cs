@@ -198,8 +198,6 @@ namespace System.Windows.Forms
         {
             InitializeComponent();
 
-            Layout += UpdateScalingFactors;
-
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             _GaugeRanges = new AGaugeRangeCollection(this);
             _GaugeLabels = new AGaugeLabelCollection(this);
@@ -888,7 +886,7 @@ namespace System.Windows.Forms
 
         #region Helper
 
-        private void UpdateScalingFactors(object sender, LayoutEventArgs e)
+        private void UpdateScalingFactors()
         {
             widthFactor = 1.0 / (2 * Center.X) * Size.Width;
             heightFactor = 1.0 / (2 * Center.Y) * Size.Height;
@@ -986,9 +984,11 @@ namespace System.Windows.Forms
 
         #region Base member overrides
 
-        protected override void OnPaintBackground(PaintEventArgs pevent)
+        protected sealed override void OnPaintBackground(PaintEventArgs pevent)
         {
-
+            BackgroundPreRender(pevent.Graphics);
+            RenderDefaultBackground(pevent.Graphics);
+            BackgroundPostRender(pevent.Graphics);
         }
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -998,16 +998,6 @@ namespace System.Windows.Forms
             {
                 return;
             }
-
-            #region drawGaugeBackground
-            if (drawGaugeBackground)
-            {
-                drawGaugeBackground = false;
-                e.Graphics.DrawImageUnscaled(BackgroundPreRender(e.Graphics, Center, centerFactor), 0, 0);
-                e.Graphics.DrawImageUnscaled(RenderDefaultBackground(e.Graphics, Center, centerFactor), 0, 0);
-                e.Graphics.DrawImageUnscaled(BackgroundPostRender(e.Graphics, Center, centerFactor), 0, 0);
-            }
-            #endregion
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
@@ -1215,6 +1205,13 @@ namespace System.Windows.Forms
             Refresh();
         }
 
+        protected override void OnLayout(LayoutEventArgs levent)
+        {
+            base.OnLayout(levent);
+
+            UpdateScalingFactors();
+        }
+
         public void BeginInit()
         {
             m_bInitializing = true;
@@ -1247,29 +1244,19 @@ namespace System.Windows.Forms
 
 
 
-        public virtual Bitmap BackgroundPreRender(Graphics graphics, Point center, float centerFactor)
-        {
-            return new Bitmap(Width, Height, graphics);
-        }
+        public virtual void BackgroundPreRender(Graphics graphics) { }
 
-        public virtual Bitmap BackgroundPostRender(Graphics graphics, Point center, float centerFactor)
-        {
-            return new Bitmap(Width, Height, graphics);
-        }
+        public virtual void BackgroundPostRender(Graphics graphics) { }
 
         /// <summary>
-        /// Renders a bitmap of the gauge's background.
+        /// Renders the default gauge background directly to the graphics object.
         /// </summary>
-        /// <param name="graphics">Acquires resolution info to generate the bitmap.</param>
-        /// <param name="center"></param>
-        /// <param name="centerFactor"></param>
+        /// <param name="graphics"></param>
         /// <returns></returns>
-        private Bitmap RenderDefaultBackground(Graphics graphics, Point center, float centerFactor)
+        private void RenderDefaultBackground(Graphics ggr)
         {
-            Bitmap gaugeBitmap = new Bitmap(Width, Height, graphics);
             FindFontBounds();
 
-            using (Graphics ggr = Graphics.FromImage(gaugeBitmap))
             using (GraphicsPath gp = new GraphicsPath())
             {
                 using (var brBackground = new SolidBrush(BackColor))
@@ -1350,8 +1337,8 @@ namespace System.Windows.Forms
                 }
                 #endregion
 
-                graphics.SetClip(ClientRectangle);
-                RenderDefaultArc(ggr, center, centerFactor);
+                ggr.SetClip(ClientRectangle);
+                RenderDefaultArc(ggr, Center, centerFactor);
 
                 #region ScaleNumbers
                 String valueText = "";
@@ -1487,8 +1474,6 @@ namespace System.Windows.Forms
                 }
                 #endregion
             }
-
-            return gaugeBitmap;
         }
 
         public virtual void RenderDefaultArc(Graphics graphics, Point center, float centerFactor)
