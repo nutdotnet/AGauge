@@ -200,6 +200,7 @@ namespace System.Windows.Forms
 
             //Default Values
             Size = new Size(205, 180);
+            UpdateScalingFactors();
         }
 
         #region Properties  
