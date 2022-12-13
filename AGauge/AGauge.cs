@@ -51,12 +51,16 @@ namespace System.Windows.Forms
         /// </summary>
         private bool m_bInitializing = false;
 
+        double widthFactor;
+        double heightFactor;
+        float centerFactor;
+
         private Single fontBoundY1;
         private Single fontBoundY2;
         private Boolean drawGaugeBackground = true;
+        private bool drawCenter = false;
 
         private Single m_value;
-        private bool drawCenter = false;
         private Single m_MinValue = m_DefaultMinValue;
         private Single m_MaxValue = m_DefaultMaxValue;
 
@@ -193,6 +197,9 @@ namespace System.Windows.Forms
         public AGauge()
         {
             InitializeComponent();
+
+            Layout += UpdateScalingFactors;
+
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             _GaugeRanges = new AGaugeRangeCollection(this);
             _GaugeLabels = new AGaugeLabelCollection(this);
@@ -881,6 +888,13 @@ namespace System.Windows.Forms
 
         #region Helper
 
+        private void UpdateScalingFactors(object sender, LayoutEventArgs e)
+        {
+            widthFactor = 1.0 / (2 * Center.X) * Size.Width;
+            heightFactor = 1.0 / (2 * Center.Y) * Size.Height;
+            centerFactor = (float)Math.Min(widthFactor, heightFactor);
+        }
+
         private void FindFontBounds()
         {
             //find upper and lower bounds for numeric characters
@@ -894,7 +908,7 @@ namespace System.Windows.Forms
                 using (Graphics gMeasure = Graphics.FromImage(bmpMeasure))
                 {
                     SizeF boundingBox = gMeasure.MeasureString("0123456789", Font, -1, StringFormat.GenericTypographic);
-                    using (var b = new Bitmap((Int32)(boundingBox.Width), (Int32)(boundingBox.Height)))
+                    using (var b = new Bitmap((Int32)boundingBox.Width, (Int32)boundingBox.Height))
                     using (var g = Graphics.FromImage(b))
                     {
                         g.FillRectangle(backBrush, 0.0F, 0.0F, boundingBox.Width, boundingBox.Height);
@@ -985,10 +999,6 @@ namespace System.Windows.Forms
                 return;
             }
 
-            double widthFactor = ((1.0 / (2 * Center.X)) * Size.Width);
-            double heightFactor = ((1.0 / (2 * Center.Y)) * Size.Height);
-            float centerFactor = (float)Math.Min(widthFactor, heightFactor);
-
             #region drawGaugeBackground
             if (drawGaugeBackground)
             {
@@ -1014,8 +1024,8 @@ namespace System.Windows.Forms
                 case NeedleType.Advance:
                     PointF[] points = new PointF[3];
 
-                    Int32 subcol = (Int32)(((brushAngle + 225) % 180) * 100 / 180);
-                    Int32 subcol2 = (Int32)(((brushAngle + 135) % 180) * 100 / 180);
+                    Int32 subcol = (Int32)((brushAngle + 225) % 180 * 100 / 180);
+                    Int32 subcol2 = (Int32)((brushAngle + 135) % 180 * 100 / 180);
 
                     using (var brNeedle = new SolidBrush(m_NeedleColor2))
                     {
@@ -1087,14 +1097,14 @@ namespace System.Windows.Forms
                             break;
                     }
 
-                    if (Math.Floor((Single)(((brushAngle + 225) % 360) / 180.0)) == 0)
+                    if (Math.Floor((Single)((brushAngle + 225) % 360 / 180.0)) == 0)
                     {
                         Color clrTemp = clr1;
                         clr1 = clr2;
                         clr2 = clrTemp;
                     }
 
-                    if (Math.Floor((Single)(((brushAngle + 135) % 360) / 180.0)) == 0)
+                    if (Math.Floor((Single)((brushAngle + 135) % 360 / 180.0)) == 0)
                     {
                         clr4 = clr3;
                     }
@@ -1435,14 +1445,14 @@ namespace System.Windows.Forms
                             ggr.RotateTransform(90.0F + m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue));
                         }
 
-                        ggr.TranslateTransform((Single)(Center.X + (m_ScaleNumbersRadius * centerFactor) * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
-                                               (Single)(Center.Y + (m_ScaleNumbersRadius * centerFactor) * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
+                        ggr.TranslateTransform((Single)(Center.X + m_ScaleNumbersRadius * centerFactor * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
+                                               (Single)(Center.Y + m_ScaleNumbersRadius * centerFactor * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (m_MaxValue - m_MinValue)) * Math.PI / 180.0f)),
                                                System.Drawing.Drawing2D.MatrixOrder.Append);
 
 
                         if (counter1 >= ScaleNumbersStartScaleLine - 1)
                         {
-                            var ptText = new PointF((-boundingBox.Width / 2f), (-fontBoundY1 - (fontBoundY2 - fontBoundY1 + 1f) / 2f));
+                            var ptText = new PointF(-boundingBox.Width / 2f, -fontBoundY1 - (fontBoundY2 - fontBoundY1 + 1f) / 2f);
                             ggr.DrawString(valueText, Font, brScaleNumbers, ptText.X, ptText.Y, Format);
                         }
 
@@ -1470,8 +1480,8 @@ namespace System.Windows.Forms
                         using (var brGaugeLabel = new SolidBrush(ptrGaugeLabel.Color))
                         {
                             ggr.DrawString(ptrGaugeLabel.Text, ptrGaugeLabel.Font, brGaugeLabel,
-                                           (ptrGaugeLabel.Position.X) * centerFactor + Center.X,
-                                           (ptrGaugeLabel.Position.Y) * centerFactor + Center.Y, Format);
+                                           ptrGaugeLabel.Position.X * centerFactor + Center.X,
+                                           ptrGaugeLabel.Position.Y * centerFactor + Center.Y, Format);
                         }
                     }
                 }
