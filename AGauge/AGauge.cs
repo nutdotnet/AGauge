@@ -1398,7 +1398,7 @@ namespace System.Windows.Forms
                                                System.Drawing.Drawing2D.MatrixOrder.Append);
 
 
-                        if (counter1 >= ScaleNumbersStartScaleLine - 1)
+                        if (counter1 >= m_ScaleNumbersStartScaleLine - 1)
                         {
                             var ptText = new PointF(-boundingBox.Width / 2f, -fontBoundY1 - (fontBoundY2 - fontBoundY1 + 1f) / 2f);
                             ggr.DrawString(valueText, Font, brScaleNumbers, ptText.X, ptText.Y, Format);
