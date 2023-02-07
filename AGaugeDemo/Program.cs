@@ -15,7 +15,7 @@ namespace AGaugeDemo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainFormTest());
+            Application.Run(new GaugeDemo());
         }
     }
 }
