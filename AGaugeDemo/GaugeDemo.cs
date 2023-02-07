@@ -13,7 +13,12 @@ namespace AGaugeDemo
             InitializeComponent();
             label = aGauge1.GaugeLabels.FindByName("GaugeLabel1");
             alert = aGauge1.GaugeRanges.FindByName("AlertRange");
+
+            tb_majTicks.Minimum = (int)gge_majTicks.MinValue;
+            tb_majTicks.Maximum = (int)gge_majTicks.MaxValue;
         }
+
+        #region aGauge1
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
@@ -38,6 +43,18 @@ namespace AGaugeDemo
         {
             //aGauge1.GaugeRanges.RemoveAt(0);
             aGauge1.GaugeRanges.Add(new AGaugeRange(Color.Blue, 40, 60));
+        }
+
+        #endregion
+
+        #region gge_majTicks
+
+
+        #endregion
+
+        private void tb_majTicks_ValueChanged(object sender, EventArgs e)
+        {
+            gge_majTicks.Value = tb_majTicks.Value;
         }
     }
 }

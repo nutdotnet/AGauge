@@ -33,9 +33,6 @@
             System.Windows.Forms.AGaugeRange aGaugeRange2 = new System.Windows.Forms.AGaugeRange();
             System.Windows.Forms.AGaugeRange aGaugeRange3 = new System.Windows.Forms.AGaugeRange();
             System.Windows.Forms.AGaugeLabel aGaugeLabel2 = new System.Windows.Forms.AGaugeLabel();
-            System.Windows.Forms.AGaugeRange aGaugeRange4 = new System.Windows.Forms.AGaugeRange();
-            System.Windows.Forms.AGaugeRange aGaugeRange5 = new System.Windows.Forms.AGaugeRange();
-            System.Windows.Forms.AGaugeRange aGaugeRange6 = new System.Windows.Forms.AGaugeRange();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Gauge1Container = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -43,16 +40,15 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.button1 = new System.Windows.Forms.Button();
             this.GaugeTestMajMarksContainer = new System.Windows.Forms.Panel();
-            this.aGauge2 = new System.Windows.Forms.AGauge();
-            this.trackBar2 = new System.Windows.Forms.TrackBar();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.gge_majTicks = new System.Windows.Forms.AGauge();
+            this.tb_majTicks = new System.Windows.Forms.TrackBar();
             this.flowLayoutPanel1.SuspendLayout();
             this.Gauge1Container.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.aGauge1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.GaugeTestMajMarksContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.aGauge2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gge_majTicks)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_majTicks)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -79,6 +75,7 @@
             // 
             // panel1
             // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Location = new System.Drawing.Point(135, 200);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(55, 23);
@@ -159,78 +156,45 @@
             // 
             this.GaugeTestMajMarksContainer.AutoSize = true;
             this.GaugeTestMajMarksContainer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.GaugeTestMajMarksContainer.Controls.Add(this.aGauge2);
-            this.GaugeTestMajMarksContainer.Controls.Add(this.trackBar2);
-            this.GaugeTestMajMarksContainer.Controls.Add(this.panel3);
+            this.GaugeTestMajMarksContainer.Controls.Add(this.gge_majTicks);
+            this.GaugeTestMajMarksContainer.Controls.Add(this.tb_majTicks);
             this.GaugeTestMajMarksContainer.Location = new System.Drawing.Point(309, 3);
             this.GaugeTestMajMarksContainer.Name = "GaugeTestMajMarksContainer";
-            this.GaugeTestMajMarksContainer.Size = new System.Drawing.Size(261, 244);
+            this.GaugeTestMajMarksContainer.Size = new System.Drawing.Size(260, 244);
             this.GaugeTestMajMarksContainer.TabIndex = 4;
             // 
-            // aGauge2
+            // gge_majTicks
             // 
-            this.aGauge2.BackColor = System.Drawing.SystemColors.Control;
+            this.gge_majTicks.BackColor = System.Drawing.SystemColors.Control;
             aGaugeLabel2.Color = System.Drawing.SystemColors.WindowText;
             aGaugeLabel2.Font = new System.Drawing.Font("Verdana", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             aGaugeLabel2.Name = "GaugeLabel1";
             aGaugeLabel2.Position = new System.Drawing.Point(85, 130);
             aGaugeLabel2.Text = "0";
-            this.aGauge2.GaugeLabels.Add(aGaugeLabel2);
-            aGaugeRange4.Color = System.Drawing.Color.Red;
-            aGaugeRange4.EndValue = 200F;
-            aGaugeRange4.InnerRadius = 70;
-            aGaugeRange4.InRange = false;
-            aGaugeRange4.Name = "AlertRange";
-            aGaugeRange4.OuterRadius = 80;
-            aGaugeRange4.StartValue = 160F;
-            aGaugeRange5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            aGaugeRange5.EndValue = 160F;
-            aGaugeRange5.InnerRadius = 70;
-            aGaugeRange5.InRange = false;
-            aGaugeRange5.Name = "GaugeRange3";
-            aGaugeRange5.OuterRadius = 75;
-            aGaugeRange5.StartValue = 0F;
-            aGaugeRange6.Color = System.Drawing.Color.Lime;
-            aGaugeRange6.EndValue = 160F;
-            aGaugeRange6.InnerRadius = 75;
-            aGaugeRange6.InRange = false;
-            aGaugeRange6.Name = "GaugeRange2";
-            aGaugeRange6.OuterRadius = 80;
-            aGaugeRange6.StartValue = 0F;
-            this.aGauge2.GaugeRanges.Add(aGaugeRange4);
-            this.aGauge2.GaugeRanges.Add(aGaugeRange5);
-            this.aGauge2.GaugeRanges.Add(aGaugeRange6);
-            this.aGauge2.Location = new System.Drawing.Point(53, 14);
-            this.aGauge2.MaxValue = 200F;
-            this.aGauge2.MinValue = 0F;
-            this.aGauge2.Name = "aGauge2";
-            this.aGauge2.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Yellow;
-            this.aGauge2.NeedleColor2 = System.Drawing.Color.Olive;
-            this.aGauge2.ScaleLinesMajorStepValue = 20F;
-            this.aGauge2.ScaleNumbersFormat = null;
-            this.aGauge2.Size = new System.Drawing.Size(205, 180);
-            this.aGauge2.TabIndex = 0;
-            this.aGauge2.Text = "aGauge2";
-            this.aGauge2.Value = 0F;
+            this.gge_majTicks.GaugeLabels.Add(aGaugeLabel2);
+            this.gge_majTicks.Location = new System.Drawing.Point(52, 15);
+            this.gge_majTicks.MaxValue = 26F;
+            this.gge_majTicks.MinValue = 2F;
+            this.gge_majTicks.Name = "gge_majTicks";
+            this.gge_majTicks.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Yellow;
+            this.gge_majTicks.NeedleColor2 = System.Drawing.Color.Olive;
+            this.gge_majTicks.ScaleLinesMajorStepValue = 7F;
+            this.gge_majTicks.ScaleNumbersFormat = null;
+            this.gge_majTicks.Size = new System.Drawing.Size(205, 180);
+            this.gge_majTicks.TabIndex = 0;
+            this.gge_majTicks.Value = 2F;
             // 
-            // trackBar2
+            // tb_majTicks
             // 
-            this.trackBar2.LargeChange = 20;
-            this.trackBar2.Location = new System.Drawing.Point(3, 3);
-            this.trackBar2.Maximum = 200;
-            this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBar2.Size = new System.Drawing.Size(45, 238);
-            this.trackBar2.TabIndex = 1;
-            this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
-            // panel3
-            // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Location = new System.Drawing.Point(210, 201);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(47, 28);
-            this.panel3.TabIndex = 2;
+            this.tb_majTicks.LargeChange = 20;
+            this.tb_majTicks.Location = new System.Drawing.Point(3, 3);
+            this.tb_majTicks.Maximum = 200;
+            this.tb_majTicks.Name = "tb_majTicks";
+            this.tb_majTicks.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.tb_majTicks.Size = new System.Drawing.Size(45, 238);
+            this.tb_majTicks.TabIndex = 1;
+            this.tb_majTicks.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tb_majTicks.ValueChanged += new System.EventHandler(this.tb_majTicks_ValueChanged);
             // 
             // GaugeDemo
             // 
@@ -248,8 +212,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.GaugeTestMajMarksContainer.ResumeLayout(false);
             this.GaugeTestMajMarksContainer.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.aGauge2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gge_majTicks)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tb_majTicks)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -257,9 +221,8 @@
         #endregion
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel GaugeTestMajMarksContainer;
-        private System.Windows.Forms.AGauge aGauge2;
-        private System.Windows.Forms.TrackBar trackBar2;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.AGauge gge_majTicks;
+        private System.Windows.Forms.TrackBar tb_majTicks;
         private System.Windows.Forms.Panel Gauge1Container;
         private System.Windows.Forms.AGauge aGauge1;
         private System.Windows.Forms.TrackBar trackBar1;
