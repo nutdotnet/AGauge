@@ -54,12 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainFormTest.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainFormTest.Designer.cs">
-      <DependentUpon>MainFormTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="GaugeDemo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,9 +62,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainFormTest.resx">
-      <DependentUpon>MainFormTest.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GaugeDemo.resx">
       <DependentUpon>GaugeDemo.cs</DependentUpon>
     </EmbeddedResource>
