@@ -55,6 +55,7 @@ namespace AGaugeDemo
         private void tb_majTicks_ValueChanged(object sender, EventArgs e)
         {
             gge_majTicks.Value = tb_majTicks.Value;
+            gge_majTicks.GaugeLabels[0].Text = tb_majTicks.Value.ToString();
         }
     }
 }

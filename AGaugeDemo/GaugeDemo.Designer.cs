@@ -168,9 +168,9 @@
             this.gge_majTicks.BackColor = System.Drawing.SystemColors.Control;
             aGaugeLabel2.Color = System.Drawing.SystemColors.WindowText;
             aGaugeLabel2.Font = new System.Drawing.Font("Verdana", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            aGaugeLabel2.Name = "GaugeLabel1";
-            aGaugeLabel2.Position = new System.Drawing.Point(85, 130);
-            aGaugeLabel2.Text = "0";
+            aGaugeLabel2.Name = "valLabel";
+            aGaugeLabel2.Position = new System.Drawing.Point(0, 40);
+            aGaugeLabel2.Text = "";
             this.gge_majTicks.GaugeLabels.Add(aGaugeLabel2);
             this.gge_majTicks.Location = new System.Drawing.Point(52, 15);
             this.gge_majTicks.MaxValue = 26F;
