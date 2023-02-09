@@ -59,7 +59,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(720, 622);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(619, 270);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
             // Gauge1Container
@@ -160,7 +160,7 @@
             this.GaugeTestMajMarksContainer.Controls.Add(this.tb_majTicks);
             this.GaugeTestMajMarksContainer.Location = new System.Drawing.Point(309, 3);
             this.GaugeTestMajMarksContainer.Name = "GaugeTestMajMarksContainer";
-            this.GaugeTestMajMarksContainer.Size = new System.Drawing.Size(260, 244);
+            this.GaugeTestMajMarksContainer.Size = new System.Drawing.Size(256, 244);
             this.GaugeTestMajMarksContainer.TabIndex = 4;
             // 
             // gge_majTicks
@@ -172,7 +172,7 @@
             aGaugeLabel2.Position = new System.Drawing.Point(0, 40);
             aGaugeLabel2.Text = "";
             this.gge_majTicks.GaugeLabels.Add(aGaugeLabel2);
-            this.gge_majTicks.Location = new System.Drawing.Point(52, 15);
+            this.gge_majTicks.Location = new System.Drawing.Point(48, 8);
             this.gge_majTicks.MaxValue = 26F;
             this.gge_majTicks.MinValue = 2F;
             this.gge_majTicks.Name = "gge_majTicks";
@@ -180,7 +180,7 @@
             this.gge_majTicks.NeedleColor2 = System.Drawing.Color.Olive;
             this.gge_majTicks.ScaleLinesMajorStepValue = 7F;
             this.gge_majTicks.ScaleNumbersFormat = null;
-            this.gge_majTicks.Size = new System.Drawing.Size(205, 180);
+            this.gge_majTicks.Size = new System.Drawing.Size(205, 193);
             this.gge_majTicks.TabIndex = 0;
             this.gge_majTicks.Value = 2F;
             // 
@@ -200,7 +200,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(720, 622);
+            this.ClientSize = new System.Drawing.Size(619, 270);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "GaugeDemo";
             this.Text = "GaugeDemo";
