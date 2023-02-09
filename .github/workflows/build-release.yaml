@@ -18,7 +18,7 @@ on:
 
 env:
   DOTNET_VERSION: '4.7.2' # The .NET SDK version to use
-  SLN_FILE: AGauge.sln
+  SLN_FILE: AGauge/AGauge.sln
   DEBUG_OUTPUT: AGauge/AGauge/bin/Debug
   CONFIG: Release
 
