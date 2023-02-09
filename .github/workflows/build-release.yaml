@@ -1,5 +1,5 @@
 # name: build-release-$(git rev-parse --short "$GITHUB_SHA")
-run-name: Build Release $(git rev-parse --short "$GITHUB_SHA")
+run-name: Build-Release Num. ${{ github.run_number }}
 
 on:
   workflow_dispatch:
