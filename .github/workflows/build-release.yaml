@@ -1,4 +1,4 @@
-name: build-release
+name: build-release-$(git rev-parse --short "$GITHUB_SHA")
 
 on:
   workflow_dispatch:
