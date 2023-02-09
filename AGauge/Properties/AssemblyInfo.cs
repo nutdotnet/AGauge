@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AGauge")]
-[assembly: AssemblyDescription("AGauge Compoent by A.J.Bauer")]
+[assembly: AssemblyTitle("AGauge Classic")]
+[assembly: AssemblyDescription("Customizable WinForms gauge control")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Code Art Engineering")]
+[assembly: AssemblyCompany("NUTDotNet Organization")]
 [assembly: AssemblyProduct("AGauge")]
-[assembly: AssemblyCopyright("Copyright © CodeArtEng 2012")]
+[assembly: AssemblyCopyright("Copyright © NUTDotNet 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.4.6")]
-[assembly: AssemblyFileVersion("2.0.4.6")]
+[assembly: AssemblyVersion("2.0.5")]
+[assembly: AssemblyFileVersion("2.0.5")]

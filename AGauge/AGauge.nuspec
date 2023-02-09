@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package >
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>$id$</id>
+    <!-- Required elements-->
+    <id>AGaugeClassic</id>
     <version>$version$</version>
-    <title>$title$</title>
+    <description>$description$</description>
     <authors>$author$</authors>
+    
+    <!-- Optional elements -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <!-- <icon>icon.png</icon> -->
-    <projectUrl>http://codearteng.blogspot.com</projectUrl>
-    <description>$description$</description>
-    <releaseNotes></releaseNotes>
+    <!-- <icon>AGauge.bmp</icon> -->
+    <projectUrl>https://github.com/nutdotnet/AGauge</projectUrl>
+    <releaseNotes>https://github.com/nutdotnet/AGauge/releases</releaseNotes>
     <copyright>$copyright$</copyright>
-    <tags></tags>
+    <tags>gauges</tags>
+    <title>$title$</title>
   </metadata>
 </package>
