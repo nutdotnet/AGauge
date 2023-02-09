@@ -20,7 +20,7 @@ on:
 env:
   DOTNET_VERSION: '4.7.2' # The .NET SDK version to use
   SLN_FILE: AGauge/AGauge.sln
-  DEBUG_OUTPUT: AGauge/AGauge/bin/Debug
+  OUTPUT: AGauge/bin/Release
   CONFIG: Release
 
 jobs:
@@ -49,12 +49,12 @@ jobs:
       id: getversion
       uses: berglie/assembly-version/get@v1
       with:
-        directory: ${{ env.DEBUG_OUTPUT }}
+        directory: ${{ env.OUTPUT }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
         name: ${{ format('AGauge-v{0}', steps.getversion.outputs.version) }}
         if-no-files-found: error
-        path: ${{ env.DEBUG_OUTPUT }}
+        path: ${{ env.OUTPUT }}
           
