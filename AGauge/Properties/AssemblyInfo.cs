@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AGauge Classic")]
-[assembly: AssemblyDescription("Customizable WinForms gauge control")]
+[assembly: AssemblyDescription("Customizable WinForms gauge control - maintained by the NUTDotNet organization. Originally by A. J.  Bauer, with further work by Code Artist and others.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("NUTDotNet Organization")]
 [assembly: AssemblyProduct("AGauge")]
