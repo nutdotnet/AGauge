@@ -3,7 +3,7 @@
   <metadata>
     <!-- Required elements-->
     <id>$id$</id>
-    <version>$version$</version>
+    <version>2.0.5-prerelease.1</version>
     <description>$description$</description>
     <authors>$author$</authors>
     <readme>docs\README.md</readme>

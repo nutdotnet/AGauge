@@ -67,9 +67,6 @@
     <None Include=".editorconfig" />
     <None Include="AGauge - FxCop.FxCop" />
     <None Include="AGauge.nuspec" />
-    <None Include="README.md">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AGauge.bmp" />
