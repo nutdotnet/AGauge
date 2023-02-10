@@ -1,4 +1,5 @@
-name: build-release
+# name: build-release-$(git rev-parse --short "$GITHUB_SHA")
+run-name: Build-Release Num. ${{ github.run_number }}
 
 on:
   workflow_dispatch:
@@ -18,8 +19,8 @@ on:
 
 env:
   DOTNET_VERSION: '4.7.2' # The .NET SDK version to use
-  SLN_FILE: AGauge.sln
-  DEBUG_OUTPUT: AGauge/AGauge/bin/Debug
+  SLN_FILE: AGauge/AGauge.sln
+  OUTPUT: AGauge/bin/Release
   CONFIG: Release
 
 jobs:
@@ -48,12 +49,12 @@ jobs:
       id: getversion
       uses: berglie/assembly-version/get@v1
       with:
-        directory: ${{ env.DEBUG_OUTPUT }}
+        directory: ${{ env.OUTPUT }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
         name: ${{ format('AGauge-v{0}', steps.getversion.outputs.version) }}
         if-no-files-found: error
-        path: ${{ env.DEBUG_OUTPUT }}
+        path: ${{ env.OUTPUT }}
           
