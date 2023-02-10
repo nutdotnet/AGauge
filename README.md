@@ -7,3 +7,8 @@ A customizable, inheritable .Net Framework WinForms Control based on the [initia
 - Dynamic Gauge Label and Gauge Range
 - NeedleType Enumeration 
 - ValueChangedEvent
+
+#Package and Download
+- NuGet: [AGauge.Classic](https://www.nuget.org/packages/AGauge.Classic)
+
+See the Releases page for additional distributions.
