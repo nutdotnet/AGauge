@@ -2,10 +2,11 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <!-- Required elements-->
-    <id>AGaugeClassic</id>
+    <id>$id$</id>
     <version>$version$</version>
     <description>$description$</description>
     <authors>$author$</authors>
+    <readme>docs\README.md</readme>
     
     <!-- Optional elements -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -14,7 +15,11 @@
     <projectUrl>https://github.com/nutdotnet/AGauge</projectUrl>
     <releaseNotes>https://github.com/nutdotnet/AGauge/releases</releaseNotes>
     <copyright>$copyright$</copyright>
-    <tags>gauges</tags>
+    <tags>gauge, winforms, control</tags>
     <title>$title$</title>
   </metadata>
+
+  <files>
+    <file src="..\README.md" target="docs\" />
+  </files>
 </package>
