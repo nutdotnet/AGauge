@@ -1025,7 +1025,15 @@ namespace System.Windows.Forms
       if (AutoSize)
       {
         double widthFactor = ((1.0 / (double)(2 * Center.X)) * (double)Size.Width);
+        if (double.IsInfinity(widthFactor))
+        {
+          widthFactor = 1;
+        }
         double heightFactor = ((1.0 / (double)(2 * Center.Y)) * (double)Size.Height);
+        if (double.IsInfinity(heightFactor))
+        {
+          heightFactor = 1;
+        }
         centerFactor = (float)Math.Min(widthFactor, heightFactor);
         center = new Point((int)(Center.X * widthFactor), (int)(Center.Y * heightFactor));
       }
