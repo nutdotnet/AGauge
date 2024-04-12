@@ -14,10 +14,7 @@ namespace System.Windows.Forms
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
-                if (null != gaugeBitmap)
-                    gaugeBitmap.Dispose();
-                
+            {                
                 if (null != components)
                     components.Dispose();
             }

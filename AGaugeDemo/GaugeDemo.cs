@@ -1,32 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace AGaugeDemo
 {
-    public partial class MainFormTest : Form
+    public partial class GaugeDemo : Form
     {
-        private System.Windows.Forms.AGaugeLabel label;
-        private System.Windows.Forms.AGaugeRange alert;
-        public MainFormTest()
+        private AGaugeLabel label;
+        private AGaugeRange alert;
+        public GaugeDemo()
         {
             InitializeComponent();
-
             label = aGauge1.GaugeLabels.FindByName("GaugeLabel1");
             alert = aGauge1.GaugeRanges.FindByName("AlertRange");
-            //aGauge1.AutoSize = true;
-            aGauge1.ValueInRangeChanged += AGauge1_ValueInRangeChanged;
+
+            tb_majTicks.Minimum = (int)gge_majTicks.MinValue;
+            tb_majTicks.Maximum = (int)gge_majTicks.MaxValue;
         }
 
-        private void AGauge1_ValueInRangeChanged(object sender, ValueInRangeChangedEventArgs e)
-        {
-
-        }
+        #region aGauge1
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
@@ -38,7 +30,7 @@ namespace AGaugeDemo
             label.Text = aGauge1.Value.ToString();
         }
 
-        private void aGauge1_ValueInRangeChanged(object sender, System.Windows.Forms.ValueInRangeChangedEventArgs e)
+        private void aGauge1_ValueInRangeChanged(object sender, ValueInRangeChangedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("InRange Event.");
             if (e.Range == alert)
@@ -51,6 +43,19 @@ namespace AGaugeDemo
         {
             //aGauge1.GaugeRanges.RemoveAt(0);
             aGauge1.GaugeRanges.Add(new AGaugeRange(Color.Blue, 40, 60));
+        }
+
+        #endregion
+
+        #region gge_majTicks
+
+
+        #endregion
+
+        private void tb_majTicks_ValueChanged(object sender, EventArgs e)
+        {
+            gge_majTicks.Value = tb_majTicks.Value;
+            gge_majTicks.GaugeLabels[0].Text = tb_majTicks.Value.ToString();
         }
     }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <!-- Required elements-->
+    <id>$id$</id>
+    <version>2.0.5-prerelease.1</version>
+    <description>$description$</description>
+    <authors>$author$</authors>
+    <readme>docs\README.md</readme>
+    
+    <!-- Optional elements -->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <!-- <icon>AGauge.bmp</icon> -->
+    <projectUrl>https://github.com/nutdotnet/AGauge</projectUrl>
+    <releaseNotes>https://github.com/nutdotnet/AGauge/releases</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>gauge, winforms, control</tags>
+    <title>$title$</title>
+  </metadata>
+
+  <files>
+    <file src="..\README.md" target="docs\" />
+  </files>
+</package>
