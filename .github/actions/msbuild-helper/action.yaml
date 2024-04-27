@@ -1,0 +1,60 @@
+# https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild-reference
+# Requires Windows Server runner
+
+name: "MSBuild-Helper"
+description: "Execute Visual Studio's MSBuild system on a Project or Solution with desired settings."
+
+branding:
+  icon: "loader"
+  color: "green"
+
+inputs:
+  directory:
+    description: "Full path where MSBuild should look for Project (or Solution) definition file, default to current working dir."
+    required: false
+    default: ""
+
+  build-config:
+    description: "Solution configuration to use when building."
+    required: true
+  
+  # https://andrewlock.net/version-vs-versionsuffix-vs-packageversion-what-do-they-all-mean/#version
+  version:
+    description: "Version string to pass to MSBuild. Ex. 0.1.0, 1.2.3.5, 99.0.3-rc-preview-2-final"
+    required: false
+
+  verbosity:
+    description: "Modify the verbosity of MSBuild. Options: q[uiet], m[inimal], n[ormal] (default), d[etailed], and diag[nostic]."
+    required: false
+    default: "normal"
+
+outputs:
+  buildOutputDir:
+    description: "Final directory of Project or Solution output(s)."
+    value: ${{ steps.vars.outputs.BUILD_OUTPUT_DIR }}
+
+  logFile:
+    description: "Location of the MSBuild log file."
+    value: "msbuild.log"
+
+runs:
+  using: "composite"
+  steps:
+    # Need to define "global" variables for this script. See https://github.com/orgs/community/discussions/51280#discussioncomment-8726096
+    - name: Set variables
+      id: vars
+      shell: pwsh
+      run: |
+        echo "BUILD_OUTPUT_DIR=${{ runner.temp }}\msbuild-out" >> $env:GITHUB_OUTPUT
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build Solution
+      id: build
+      shell: pwsh
+      run: >
+        msbuild ${{ inputs.directory }} -nologo -fileLogger -verbosity:${{ inputs.verbosity }}
+        -property:Configuration=${{ inputs.build-config }}
+        -property:AssemblyVersion=1.2.3.4
+        -property:OutDir=${{ steps.vars.outputs.BUILD_OUTPUT_DIR }}
