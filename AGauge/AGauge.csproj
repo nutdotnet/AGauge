@@ -30,7 +30,6 @@
     </None>
   </ItemGroup>
   <PropertyGroup>
-    <Title>AGauge Classic</Title>
     <Description>Customizable WinForms gauge control - maintained by the NUTDotNet organization.</Description>
     <Authors>A. J.  Bauer, with further work by Code Artist and others.</Authors>
     <Version />
@@ -45,5 +44,6 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageId>AGauge.Classic</PackageId>
   </PropertyGroup>
 </Project>

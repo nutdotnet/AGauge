@@ -3,12 +3,12 @@
   <metadata>
     <!-- Required elements-->
     <id>$id$</id>
-    <version>2.0.5-prerelease.1</version>
+    <version>$version$</version>
     <description>$description$</description>
     <authors>$author$</authors>
-    <readme>docs\README.md</readme>
     
     <!-- Optional elements -->
+    <readme>docs\README.md</readme>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <!-- <icon>AGauge.bmp</icon> -->
