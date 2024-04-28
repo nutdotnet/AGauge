@@ -56,5 +56,5 @@ runs:
       run: >
         msbuild ${{ inputs.directory }} -nologo -fileLogger -verbosity:${{ inputs.verbosity }}
         -property:Configuration=${{ inputs.build-config }}
-        -property:Version=${{ inputs.version }}
+        -property:AssemblyVersion=1.2.3.4
         -property:OutDir=${{ steps.vars.outputs.BUILD_OUTPUT_DIR }}
