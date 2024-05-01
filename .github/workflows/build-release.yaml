@@ -3,7 +3,6 @@ name: build-release
 on:
   push:
     tags: "v*"
-    branches: "main"
 
 env:
   PRIMARY_FOLDER: AGauge

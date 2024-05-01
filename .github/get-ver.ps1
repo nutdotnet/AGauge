@@ -13,7 +13,7 @@ if (!($matchInfo.Success)) {
 
 $verRes = "ASMVER={0}.{1}.{2}" -f $matchInfo.Groups["major"], $matchInfo.Groups["minor"], $matchInfo.Groups["patch"]
 $semVerRes = "SEMVER=" + $matchInfo.Value
-$isPr = "ISPRERELEASE=" + $matchInfo.Groups.ContainsKey("prerelease")
+$isPr = "ISPRERELEASE=" + $matchInfo.Groups.ContainsKey("prerelease").ToString().ToLower()
 
 echo $verRes >> $env:GITHUB_OUTPUT
 echo $semVerRes >> $env:GITHUB_OUTPUT
