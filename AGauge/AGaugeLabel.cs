@@ -23,9 +23,10 @@
 //
 // -----------------------------------------------------------------------------------
 
+using System;
 using System.Drawing;
 
-namespace System.Windows.Forms
+namespace AGauge
 {
   public class AGaugeLabel
   {

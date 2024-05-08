@@ -23,21 +23,23 @@
 //
 // -----------------------------------------------------------------------------------
 
+using System;
 using System.ComponentModel;
+using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Diagnostics;
-using System.ComponentModel.Design;
+using System.Windows.Forms;
 
-namespace System.Windows.Forms
+namespace AGauge
 {
+
     /// <summary>
-    /// <para>AGauge - Copyright (C) 2007 A.J.Bauer</para>
-    /// <link>http://www.codeproject.com/Articles/17559/A-fast-and-performing-gauge</link>
+    /// .NET Framework WinForms Gauge control
     /// </summary>
     [ToolboxBitmap(typeof(AGauge), "AGauge.AGauge.bmp"),
-  DefaultEvent("ValueInRangeChanged"),
-  Description("Displays a value on an analog gauge. Raises an event if the value enters one of the definable ranges.")]
+    DefaultEvent("ValueInRangeChanged"),
+    Description("Displays a value on an analog gauge. Raises an event if the value enters one of the definable ranges.")]
     public partial class AGauge : Control, ISupportInitialize
     {
         #region Private Fields
@@ -160,6 +162,7 @@ namespace System.Windows.Forms
         public new Boolean AutoSize { get { return base.AutoSize; } set { /*Do Nothing */ } }
         public new Boolean ForeColor { get { return false; } set { /*Do Nothing */ } }
         public new Boolean ImeMode { get { return false; } set { /*Do Nothing */ } }
+        protected override Size DefaultSize => new Size(205, 180);
 
         public override Color BackColor
         {
@@ -192,14 +195,11 @@ namespace System.Windows.Forms
 
         public AGauge()
         {
-            InitializeComponent();
-
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             _GaugeRanges = new AGaugeRangeCollection(this);
             _GaugeLabels = new AGaugeLabelCollection(this);
 
             //Default Values
-            Size = new Size(205, 180);
             UpdateScalingFactors();
         }
 
@@ -1453,8 +1453,4 @@ namespace System.Windows.Forms
 
         #endregion
     }
-
-
-    [Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc { } //Namespace Documentation
 }

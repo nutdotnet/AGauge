@@ -25,7 +25,7 @@
 
 using System.Collections;
 
-namespace System.Windows.Forms
+namespace AGauge
 {
   public class AGaugeRangeCollection : CollectionBase
   {

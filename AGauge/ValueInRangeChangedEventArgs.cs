@@ -23,7 +23,9 @@
 //
 // -----------------------------------------------------------------------------------
 
-namespace System.Windows.Forms
+using System;
+
+namespace AGauge
 {
   /// <summary>
   /// Event argument for <see cref="ValueInRangeChanged"/> event.
