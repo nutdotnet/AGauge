@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.AGaugeLabel aGaugeLabel1 = new System.Windows.Forms.AGaugeLabel();
-            System.Windows.Forms.AGaugeRange aGaugeRange1 = new System.Windows.Forms.AGaugeRange();
-            System.Windows.Forms.AGaugeRange aGaugeRange2 = new System.Windows.Forms.AGaugeRange();
-            System.Windows.Forms.AGaugeRange aGaugeRange3 = new System.Windows.Forms.AGaugeRange();
-            System.Windows.Forms.AGaugeLabel aGaugeLabel2 = new System.Windows.Forms.AGaugeLabel();
+            AGauge.AGaugeLabel aGaugeLabel1 = new AGauge.AGaugeLabel();
+            AGauge.AGaugeRange aGaugeRange1 = new AGauge.AGaugeRange();
+            AGauge.AGaugeRange aGaugeRange2 = new AGauge.AGaugeRange();
+            AGauge.AGaugeRange aGaugeRange3 = new AGauge.AGaugeRange();
+            AGauge.AGaugeLabel aGaugeLabel2 = new AGauge.AGaugeLabel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Gauge1Container = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.aGauge1 = new System.Windows.Forms.AGauge();
+            this.aGauge1 = new AGauge.AGauge();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.button1 = new System.Windows.Forms.Button();
             this.GaugeTestMajMarksContainer = new System.Windows.Forms.Panel();
-            this.gge_majTicks = new System.Windows.Forms.AGauge();
+            this.gge_majTicks = new AGauge.AGauge();
             this.tb_majTicks = new System.Windows.Forms.TrackBar();
             this.flowLayoutPanel1.SuspendLayout();
             this.Gauge1Container.SuspendLayout();
@@ -126,7 +126,7 @@
             this.aGauge1.TabIndex = 0;
             this.aGauge1.Text = "aGauge1";
             this.aGauge1.Value = 0F;
-            this.aGauge1.ValueInRangeChanged += new System.EventHandler<System.Windows.Forms.ValueInRangeChangedEventArgs>(this.aGauge1_ValueInRangeChanged);
+            this.aGauge1.ValueInRangeChanged += new System.EventHandler<AGauge.ValueInRangeChangedEventArgs>(this.aGauge1_ValueInRangeChanged);
             // 
             // trackBar1
             // 
@@ -221,10 +221,10 @@
         #endregion
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel GaugeTestMajMarksContainer;
-        private System.Windows.Forms.AGauge gge_majTicks;
+        private AGauge.AGauge gge_majTicks;
         private System.Windows.Forms.TrackBar tb_majTicks;
         private System.Windows.Forms.Panel Gauge1Container;
-        private System.Windows.Forms.AGauge aGauge1;
+        private AGauge.AGauge aGauge1;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel1;

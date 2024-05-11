@@ -5,22 +5,32 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AGauge", "AGauge\AGauge.csproj", "{3CF36E77-CD6E-428A-89F9-31C8C8E595C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGaugeApp", "AGaugeApp\AGaugeApp.csproj", "{FB89F830-9695-466E-B495-6D7E1E3AD198}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGaugeDemo", "AGaugeDemo\AGaugeDemo.csproj", "{B5DBBA7D-17B1-4688-AB92-E09208D7D3BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3CF36E77-CD6E-428A-89F9-31C8C8E595C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3CF36E77-CD6E-428A-89F9-31C8C8E595C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CF36E77-CD6E-428A-89F9-31C8C8E595C7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3CF36E77-CD6E-428A-89F9-31C8C8E595C7}.Debug|x86.Build.0 = Debug|Any CPU
 		{3CF36E77-CD6E-428A-89F9-31C8C8E595C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CF36E77-CD6E-428A-89F9-31C8C8E595C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB89F830-9695-466E-B495-6D7E1E3AD198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB89F830-9695-466E-B495-6D7E1E3AD198}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB89F830-9695-466E-B495-6D7E1E3AD198}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB89F830-9695-466E-B495-6D7E1E3AD198}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CF36E77-CD6E-428A-89F9-31C8C8E595C7}.Release|x86.ActiveCfg = Release|Any CPU
+		{3CF36E77-CD6E-428A-89F9-31C8C8E595C7}.Release|x86.Build.0 = Release|Any CPU
+		{B5DBBA7D-17B1-4688-AB92-E09208D7D3BB}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B5DBBA7D-17B1-4688-AB92-E09208D7D3BB}.Debug|Any CPU.Build.0 = Debug|x86
+		{B5DBBA7D-17B1-4688-AB92-E09208D7D3BB}.Debug|x86.ActiveCfg = Debug|x86
+		{B5DBBA7D-17B1-4688-AB92-E09208D7D3BB}.Debug|x86.Build.0 = Debug|x86
+		{B5DBBA7D-17B1-4688-AB92-E09208D7D3BB}.Release|Any CPU.ActiveCfg = Release|x86
+		{B5DBBA7D-17B1-4688-AB92-E09208D7D3BB}.Release|Any CPU.Build.0 = Release|x86
+		{B5DBBA7D-17B1-4688-AB92-E09208D7D3BB}.Release|x86.ActiveCfg = Release|x86
+		{B5DBBA7D-17B1-4688-AB92-E09208D7D3BB}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
