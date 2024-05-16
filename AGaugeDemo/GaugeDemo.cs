@@ -1,6 +1,8 @@
 ﻿using AGauge;
 using System;
+using System.ComponentModel;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace AGaugeDemo
@@ -9,14 +11,15 @@ namespace AGaugeDemo
     {
         private AGaugeLabel label;
         private AGaugeRange alert;
+        private MajTicksGaugeBusinessObject majTicksGBO = new MajTicksGaugeBusinessObject();
+
         public GaugeDemo()
         {
             InitializeComponent();
             label = aGauge1.GaugeLabels.FindByName("GaugeLabel1");
             alert = aGauge1.GaugeRanges.FindByName("AlertRange");
 
-            tb_majTicks.Minimum = (int)gge_majTicks.MinValue;
-            tb_majTicks.Maximum = (int)gge_majTicks.MaxValue;
+            majTicksGaugeBusinessObjectBindingSource.DataSource = majTicksGBO;
         }
 
         #region aGauge1
@@ -53,10 +56,27 @@ namespace AGaugeDemo
 
         #endregion
 
-        private void tb_majTicks_ValueChanged(object sender, EventArgs e)
+        public class MajTicksGaugeBusinessObject : INotifyPropertyChanged
         {
-            gge_majTicks.Value = tb_majTicks.Value;
-            gge_majTicks.GaugeLabels[0].Text = tb_majTicks.Value.ToString();
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+
+            private int _value;
+            public int Value
+            {
+                get { return _value; }
+                set
+                {
+                    if (value != _value) {
+                        _value = value;
+                        NotifyPropertyChanged();
+                    }
+                }
+            }
         }
     }
 }
