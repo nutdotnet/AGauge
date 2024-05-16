@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Debug devenv": {
+      "commandName": "Executable",
+      "executablePath": "$(DevEnvDir)devenv.exe",
+      "commandLineArgs": "$(SolutionPath)"
+    }
+  }
+}
