@@ -29,9 +29,9 @@ namespace AGauge
 {
     public class AGaugeLabelCollection : CollectionBase
     {
-        private readonly AGauge m_Owner;
+        private readonly Controls.AGauge m_Owner;
 
-        public AGaugeLabelCollection(AGauge sender)
+        public AGaugeLabelCollection(Controls.AGauge sender)
         {
             m_Owner = sender;
         }
@@ -40,7 +40,7 @@ namespace AGauge
         {
             if (m_Owner != null)
             {
-                m_Owner.NotifyChanging(nameof(AGauge.GaugeLabels));
+                m_Owner.NotifyChanging(nameof(Controls.AGauge.GaugeLabels));
             }
         }
 
@@ -48,7 +48,7 @@ namespace AGauge
         {
             if (m_Owner != null)
             {
-                m_Owner.NotifyChanged(nameof(AGauge.GaugeLabels));
+                m_Owner.NotifyChanged(nameof(Controls.AGauge.GaugeLabels));
             }
         }
 

@@ -58,15 +58,15 @@ namespace AGauge
     [System.ComponentModel.Browsable(false)]
     public Boolean InRange { get; set; }
 
-    private AGauge Owner;
+    private Controls.AGauge Owner;
     [System.ComponentModel.Browsable(false)]
-    public void SetOwner(AGauge value) { Owner = value; }
+    public void SetOwner(Controls.AGauge value) { Owner = value; }
     private void NotifyOwner() { if (Owner != null) Owner.RepaintControl(); }
     private void NotifyChanging()
     {
       if (Owner != null)
       {
-        Owner.NotifyChanging(nameof(AGauge.GaugeRanges));
+        Owner.NotifyChanging(nameof(Controls.AGauge.GaugeRanges));
       }
     }
 
@@ -74,7 +74,7 @@ namespace AGauge
     {
       if (Owner != null)
       {
-        Owner.NotifyChanged(nameof(AGauge.GaugeRanges));
+        Owner.NotifyChanged(nameof(Controls.AGauge.GaugeRanges));
       }
     }
 

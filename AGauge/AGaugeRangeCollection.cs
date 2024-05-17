@@ -29,13 +29,13 @@ namespace AGauge
 {
   public class AGaugeRangeCollection : CollectionBase
   {
-    private AGauge m_Owner;
-    public AGaugeRangeCollection(AGauge sender) { m_Owner = sender; }
+    private Controls.AGauge m_Owner;
+    public AGaugeRangeCollection(Controls.AGauge sender) { m_Owner = sender; }
     private void NotifyChanging()
     {
       if (m_Owner != null)
       {
-        m_Owner.NotifyChanging(nameof(AGauge.GaugeRanges));
+        m_Owner.NotifyChanging(nameof(Controls.AGauge.GaugeRanges));
       }
     }
 
@@ -43,7 +43,7 @@ namespace AGauge
     {
       if (m_Owner != null)
       {
-        m_Owner.NotifyChanged(nameof(AGauge.GaugeRanges));
+        m_Owner.NotifyChanged(nameof(Controls.AGauge.GaugeRanges));
       }
     }
 

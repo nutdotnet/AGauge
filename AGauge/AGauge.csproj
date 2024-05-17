@@ -5,7 +5,7 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="AGauge.cs" />
+    <Compile Update="Controls\AGauge.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\LICENSE">

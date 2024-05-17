@@ -38,8 +38,8 @@ namespace AGauge
     private string _Name;
 
     [System.ComponentModel.Browsable(false)]
-    public void SetOwner(AGauge value) { Owner = value; }
-    private AGauge Owner;
+    public void SetOwner(Controls.AGauge value) { Owner = value; }
+    private Controls.AGauge Owner;
 
     private void NotifyOwner() { if (Owner != null) Owner.RepaintControl(); }
 
@@ -47,7 +47,7 @@ namespace AGauge
     {
       if (Owner != null)
       {
-        Owner.NotifyChanging(nameof(AGauge.GaugeLabels));
+        Owner.NotifyChanging(nameof(Controls.AGauge.GaugeLabels));
       }
     }
 
@@ -55,7 +55,7 @@ namespace AGauge
     {
       if (Owner != null)
       {
-        Owner.NotifyChanged(nameof(AGauge.GaugeLabels));
+        Owner.NotifyChanged(nameof(Controls.AGauge.GaugeLabels));
       }
     }
 
