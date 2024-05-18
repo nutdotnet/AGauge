@@ -165,7 +165,7 @@ namespace AGauge.Controls
 
         #endregion
 
-        #region Properties
+        #region Overridden/Default Properties
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public override bool AllowDrop { get { return false; } set { } }
@@ -209,23 +209,6 @@ namespace AGauge.Controls
             }
         }
         #endregion
-
-        public AGauge()
-        {
-#if !DEBUG
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-#endif
-            _GaugeRanges = new AGaugeRangeCollection(this);
-            _GaugeLabels = new AGaugeLabelCollection(this);
-
-            //Default Values
-            UpdateScalingFactors();
-
-            //Enable debug features.
-#if DEBUG
-            drawCenter = true;
-#endif
-        }
 
         #region Properties  
         [Browsable(true),
@@ -866,6 +849,22 @@ namespace AGauge.Controls
         #endregion
 
         #endregion
+
+        public AGauge()
+        {
+            _GaugeRanges = new AGaugeRangeCollection(this);
+            _GaugeLabels = new AGaugeLabelCollection(this);
+
+            //Default Values
+            UpdateScalingFactors();
+
+            //If debugging, enable the center point draw code and leave double-buffering off (step-through draw code.)
+#if DEBUG
+            drawCenter = true;
+#else
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+#endif
+        }
 
         #region Helper
 
