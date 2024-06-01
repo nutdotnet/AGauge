@@ -1,41 +1,16 @@
-﻿// Copyright (C) 2007 A.J.Bauer
-//
-//  This software is provided as-is, without any express or implied
-//  warranty.  In no event will the authors be held liable for any damages
-//  arising from the use of this software.
-
-//  Permission is granted to anyone to use this software for any purpose,
-//  including commercial applications, and to alter it and redistribute it
-//  freely, subject to the following restrictions:
-//  1. The origin of this software must not be misrepresented; you must not
-//     claim that you wrote the original software. if you use this software
-//     in a product, an acknowledgment in the product documentation would be
-//     appreciated but is not required.
-//  2. Altered source versions must be plainly marked as such, and must not be
-//     misrepresented as being the original software.
-//  3. This notice may not be removed or altered from any source distribution.
-//
-// -----------------------------------------------------------------------------------
-// Copyright (C) 2012 Code Artist
-// 
-// Added several improvement to original code created by A.J.Bauer.
-// Visit: http://codearteng.blogspot.com for more information on change history.
-//
-// -----------------------------------------------------------------------------------
-
-using System.Collections;
+﻿using System.Collections;
 
 namespace AGauge
 {
   public class AGaugeRangeCollection : CollectionBase
   {
-    private Controls.AGauge m_Owner;
-    public AGaugeRangeCollection(Controls.AGauge sender) { m_Owner = sender; }
+    private AGaugeControl m_Owner;
+    public AGaugeRangeCollection(AGaugeControl sender) { m_Owner = sender; }
     private void NotifyChanging()
     {
       if (m_Owner != null)
       {
-        m_Owner.NotifyChanging(nameof(Controls.AGauge.GaugeRanges));
+        m_Owner.NotifyChanging(nameof(AGaugeControl.GaugeRanges));
       }
     }
 
@@ -43,7 +18,7 @@ namespace AGauge
     {
       if (m_Owner != null)
       {
-        m_Owner.NotifyChanged(nameof(Controls.AGauge.GaugeRanges));
+        m_Owner.NotifyChanged(nameof(AGaugeControl.GaugeRanges));
       }
     }
 
