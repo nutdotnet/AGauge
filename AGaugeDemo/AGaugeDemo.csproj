@@ -43,7 +43,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Workflow.ComponentModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +56,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composites\NumericInput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Composites\NumericInput.Designer.cs">
+      <DependentUpon>NumericInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Composites\UserInputAGauge.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Composites\UserInputAGauge.Designer.cs">
+      <DependentUpon>UserInputAGauge.cs</DependentUpon>
+    </Compile>
+    <None Include="Composites\UserInputAGaugeBinding.cs" />
     <Compile Include="GaugeDemo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +77,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Composites\NumericInput.resx">
+      <DependentUpon>NumericInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Composites\UserInputAGauge.resx">
+      <DependentUpon>UserInputAGauge.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GaugeDemo.resx">
       <DependentUpon>GaugeDemo.cs</DependentUpon>
     </EmbeddedResource>
@@ -76,7 +97,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="Properties\DataSources\GaugeDemo.MajTicksGaugeBusinessObject.datasource" />
+    <None Include="Properties\DataSources\AGaugeDemo.Composites.UserInputAGauge+UserInputAGaugeBusinessObject.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,6 +114,7 @@
       <Name>AGauge</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

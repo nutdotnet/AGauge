@@ -11,15 +11,12 @@ namespace AGaugeDemo
     {
         private AGaugeLabel label;
         private AGaugeRange alert;
-        private MajTicksGaugeBusinessObject majTicksGBO = new MajTicksGaugeBusinessObject();
 
         public GaugeDemo()
         {
             InitializeComponent();
             label = aGauge1.GaugeLabels.FindByName("GaugeLabel1");
             alert = aGauge1.GaugeRanges.FindByName("AlertRange");
-
-            majTicksGaugeBusinessObjectBindingSource.DataSource = majTicksGBO;
         }
 
         #region aGauge1
@@ -50,33 +47,5 @@ namespace AGaugeDemo
         }
 
         #endregion
-
-        #region gge_majTicks
-
-
-        #endregion
-
-        public class MajTicksGaugeBusinessObject : INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-
-            private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-
-            private int _value;
-            public int Value
-            {
-                get { return _value; }
-                set
-                {
-                    if (value != _value) {
-                        _value = value;
-                        NotifyPropertyChanged();
-                    }
-                }
-            }
-        }
     }
 }
