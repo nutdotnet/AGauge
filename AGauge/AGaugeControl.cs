@@ -10,13 +10,13 @@ using System.Windows.Forms;
 namespace AGauge
 {
 
-    /// <summary>
+    /// <summary> 
     /// .NET Framework WinForms Gauge control
     /// </summary>
     [ToolboxBitmap(typeof(AGaugeControl), "AGaugeControl.AGaugeControl.bmp"),
     DefaultEvent("ValueInRangeChanged"),
     Description("Displays a value on an analog gauge. Raises an event if the value enters one of the definable ranges.")]
-    public partial class AGaugeControl : Control, IDataErrorInfo
+    public partial class AGaugeControl : Control
     {
         #region Defaults/Constants
         private const int MINIMUM_RANGE = 1; // The smallest difference between max and min.
@@ -58,11 +58,8 @@ namespace AGauge
         private float fontBoundY2;
 
         private float m_value;
-        private float m_valueDisplayed;
         private int m_MinValue = m_DefaultMinValue;
-        private int _minValueDisplayed = m_DefaultMinValue;
         private int m_MaxValue = m_DefaultMaxValue;
-        private int _maxValueDisplayed = m_DefaultMaxValue;
 
         private Color m_BaseArcColor = Color.Gray;
         private int m_BaseArcRadius = m_DefaultBaseArcRadius;
@@ -82,7 +79,6 @@ namespace AGauge
         private int m_ScaleLinesMinorWidth = m_DefaultScaleLinesMinorWidth;
 
         private int m_ScaleLinesMajorStepValue = m_DefaultScaleLinesMajorStepValue;
-        private int _scaleLinesMajorStepValueDisplayed = m_DefaultScaleLinesMajorStepValue;
         private Color m_ScaleLinesMajorColor = Color.Black;
         private int m_ScaleLinesMajorInnerRadius = m_DefaultScaleLinesMajorInnerRadius;
         private int m_ScaleLinesMajorOuterRadius = m_DefaultScaleLinesMajorOuterRadius;
@@ -188,65 +184,39 @@ namespace AGauge
             get { return m_value; }
             set
             {
-                if (m_value != value)
+                if (m_value != value && value >= MinValue && value <= MaxValue)
                 {
                     m_value = value;
+                    OnValueChanged(this, EventArgs.Empty);
 
-                    if (value < MinValue)
+                    foreach (AGaugeRange ptrRange in _GaugeRanges)
                     {
-                        SetError("Value", "Value is below MinValue.");
-                        return;
-                    }
-                    else if (value > MaxValue)
-                    {
-                        SetError("Value", "Value is above MaxValue.");
-                        return;
-                    }
-                    else
-                    {
-                        ClearErrors("Value");
-                        ValueDisplayed = value;
-                        OnValueChanged(this, EventArgs.Empty);
-
-                        foreach (AGaugeRange ptrRange in _GaugeRanges)
+                        if ((m_value >= ptrRange.StartValue)
+                            && (m_value <= ptrRange.EndValue))
                         {
-                            if ((m_value >= ptrRange.StartValue)
-                                && (m_value <= ptrRange.EndValue))
+                            //Entering Range
+                            if (!ptrRange.InRange)
                             {
-                                //Entering Range
-                                if (!ptrRange.InRange)
-                                {
-                                    ptrRange.InRange = true;
-                                    OnValueInRangeChanged(this,
-                                        new ValueInRangeChangedEventArgs(ptrRange, m_value, ptrRange.InRange));
-                                }
-                            }
-                            else
-                            {
-                                //Leaving Range
-                                if (ptrRange.InRange)
-                                {
-                                    ptrRange.InRange = false;
-                                    OnValueInRangeChanged(this,
-                                        new ValueInRangeChangedEventArgs(ptrRange, m_value, ptrRange.InRange));
-                                }
+                                ptrRange.InRange = true;
+                                OnValueInRangeChanged(this,
+                                    new ValueInRangeChangedEventArgs(ptrRange, m_value, ptrRange.InRange));
                             }
                         }
-
-                        Refresh();
+                        else
+                        {
+                            //Leaving Range
+                            if (ptrRange.InRange)
+                            {
+                                ptrRange.InRange = false;
+                                OnValueInRangeChanged(this,
+                                    new ValueInRangeChangedEventArgs(ptrRange, m_value, ptrRange.InRange));
+                            }
+                        }
                     }
+
+                    Refresh();
                 }
             }
-        }
-
-        [Browsable(true),
-        Bindable(true),
-        Category(Categories.Data),
-        Description("Gauge value that is validated and currently displayed on the gauge.")]
-        public float ValueDisplayed
-        {
-            get => m_valueDisplayed;
-            private set => m_valueDisplayed = value;
         }
 
         [Browsable(true),
@@ -355,17 +325,6 @@ namespace AGauge
             }
         }
 
-        [Browsable(true),
-        Category(Categories.Data),
-        Description("Indicates whether or not the gauge is in a valid state.")]
-        public bool ValidScale
-        {
-            get
-            {
-                return IsValidMajorStepValue(ValueRange);
-            }
-        }
-
         #endregion
 
         #region << Gauge Scale >>
@@ -379,38 +338,12 @@ namespace AGauge
             get { return m_MinValue; }
             set
             {
-                if (m_MinValue != value)
+                if (m_MinValue != value && value <= MaxValue - MINIMUM_RANGE)
                 {
-                    m_MinValue = value;
-
-                    int greatestMinValue = MaxValue - MINIMUM_RANGE;
-                    if (MinValue > greatestMinValue)
-                    {
-                        SetError("MinValue", $"MinValue cannot be greater than {greatestMinValue}.");
-                        return;
-                    }
-                    else if (!IsValidMajorStepValue(ValueRange))
-                    {
-                        SetError("MinValue", $"Min and MaxValue difference ({ValueRange}) not a factor of ScaleLinesMajorStepValue ({ScaleLinesMajorStepValue}).");
-                        return;
-                    }
-                    else
-                    {
-                        ClearErrors("MinValue");
-                        MinValueDisplayed = value;
-                        Refresh();
-                    }
+                    m_MinValue = value;                    
+                    Refresh();
                 }
             }
-        }
-
-        [Browsable(true),
-        Category(Categories.Data),
-        Description("The validated minimum value currently displayed on the gauge scale.")]
-        public int MinValueDisplayed
-        {
-            get => _minValueDisplayed;
-            private set => _minValueDisplayed = value;
         }
 
         [Browsable(true),
@@ -422,38 +355,12 @@ namespace AGauge
             get { return m_MaxValue; }
             set
             {
-                if (m_MaxValue != value)
+                if (m_MaxValue != value && value >= MinValue + MINIMUM_RANGE)
                 {
                     m_MaxValue = value;
-
-                    int leastMaxValue = MinValue + MINIMUM_RANGE;
-                    if (value < leastMaxValue)
-                    {
-                        SetError("MaxValue", $"MaxValue cannot be less than {leastMaxValue}.");
-                        return;
-                    }
-                    else if (!IsValidMajorStepValue(ValueRange))
-                    {
-                        SetError("MaxValue", $"Min and MaxValue difference ({ValueRange}) not a factor of ScaleLinesMajorStepValue ({ScaleLinesMajorStepValue}).");
-                        return;
-                    }
-                    else
-                    {
-                        ClearErrors("MaxValue");
-                        MaxValueDisplayed = value;
-                        Refresh();
-                    }
+                    Refresh();
                 }
             }
-        }
-
-        [Browsable(true),
-        Category(Categories.Data),
-        Description("The validated maximum value currently displayed on the gauge scale.")]
-        public int MaxValueDisplayed
-        {
-            get => _maxValueDisplayed;
-            private set => _maxValueDisplayed = value;
         }
 
         [Browsable(true),
@@ -623,35 +530,15 @@ namespace AGauge
         [DefaultValue(m_DefaultScaleLinesMajorStepValue)]
         public int ScaleLinesMajorStepValue
         {
-            get { return m_ScaleLinesMajorStepValue; }
+            get => m_ScaleLinesMajorStepValue;
             set
             {
                 if (m_ScaleLinesMajorStepValue != value)
                 {
                     m_ScaleLinesMajorStepValue = value;
-
-                    if (!IsValidMajorStepValue(value, ValueRange))
-                    {
-                        SetError("ScaleLinesMajorStepValue", $"ScaleLinesMajorStepValue ({ScaleLinesMajorStepValue}) not a factor of Min and MaxValue difference ({ValueRange}).");
-                        return;
-                    }
-                    else
-                    {
-                        ClearErrors("ScaleLinesMajorStepValue");
-                        ScaleLinesMajorStepValueDisplayed = value;
-                        Refresh();
-                    }
+                    Refresh();
                 }
             }
-        }
-
-        [Browsable(true),
-        Category(Categories.Scale),
-        Description("ScaleLinesMajorStepValue that is validated and displayed on the gauge.")]
-        public int ScaleLinesMajorStepValueDisplayed
-        {
-            get => _scaleLinesMajorStepValueDisplayed;
-            private set => _scaleLinesMajorStepValueDisplayed = value;
         }
 
         [Browsable(true),
@@ -929,10 +816,6 @@ namespace AGauge
             //Default Values
             UpdateScalingFactors();
 
-            //Initial update of displayed values.
-            MinValueDisplayed = MinValue;
-            MaxValueDisplayed = MaxValue;
-
             //If debugging, enable the center point draw code and leave double-buffering off (step-through draw code.)
 #if DEBUG
             drawCenter = true;
@@ -988,57 +871,23 @@ namespace AGauge
         /// <param name="majStepVal"></param>
         /// <param name="valueRange"></param>
         /// <returns></returns>
-        private bool IsValidMajorStepValue(int majStepVal, int valueRange)
+        private bool IsValidMajorStepValue(int majStepVal, int valRange)
         {
-            return majStepVal > 0 && majStepVal <= valueRange && valueRange % majStepVal == 0;
+            if (majStepVal < 1 || valRange < 1)
+                return false;
+            else
+                return valRange % majStepVal == 0;
         }
-
-        private bool IsValidMajorStepValue(int valueRange)
-        {
-            return IsValidMajorStepValue(ScaleLinesMajorStepValue, valueRange);
-        }
-
-        //public int FindNextHighestMajorStepValue(int desiredMinVal = -1, int desiredMaxVal = -1,
-        //    int desiredMajStepVal = -1)
-        //{
-        //    var minVal = (desiredMinVal == -1) ? MinValue : desiredMinVal;
-        //    var maxVal = (desiredMaxVal == -1) ? MaxValue : desiredMaxVal;
-        //    var majStepVal = (desiredMajStepVal == -1) ? ScaleLinesMajorStepValue : desiredMajStepVal;
-
-        //    while (!IsValidMajorStepValue(majStepVal, range))
-        //    {
-        //        // if (maxVal - minVal)
-        //    }
-        //}
 
         /// <summary>
-        /// If the desired value is not already valid as the number of steps between major values (is divisible), then
-        /// try to find the next valid number by calculating the Greatest Common Factor, down to 1.
+        /// Test a given range of values against the current <see cref="ScaleLinesMajorStepValue"/>.
         /// </summary>
-        /// <param name="desiredValue"></param>
+        /// <param name="valRange">The difference between Min and Max values to be compared against 
+        /// <see cref="ScaleLinesMajorStepValue"/>.</param>
         /// <returns></returns>
-        private int HighestValidMajorStepValue(int desiredValue)
+        private bool IsValidMajorStepValue(int valRange)
         {
-            if (desiredValue < 1)
-            {
-                throw new ArgumentOutOfRangeException("desiredValue");
-            }
-            else
-            {
-                int greatestCommonFactor = ValueRange; //a
-                int gcfB = desiredValue;
-
-
-                while (gcfB != 0)
-                {
-                    int temp = gcfB;
-                    gcfB = greatestCommonFactor % gcfB;
-                    greatestCommonFactor = temp;
-                }
-
-                return greatestCommonFactor;
-                //return (ValueRange / greatestCommonFactor * desiredValue);
-            }
+            return IsValidMajorStepValue(ScaleLinesMajorStepValue, valRange);
         }
 
         #endregion
@@ -1158,7 +1007,7 @@ namespace AGauge
             e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
             #region Needle
-            float brushAngle = (int)(m_BaseArcStart + (ValueDisplayed - MinValueDisplayed) * m_BaseArcSweep / (ValueRange)) % 360;
+            float brushAngle = (int)(m_BaseArcStart + (Value - MinValue) * m_BaseArcSweep / ValueRange) % 360;
             if (brushAngle < 0) brushAngle += 360;
             double needleAngle = brushAngle * Math.PI / 180;
 
@@ -1445,8 +1294,8 @@ namespace AGauge
                 {
                     if (ptrRange.EndValue > ptrRange.StartValue)
                     {
-                        rangeStartAngle = m_BaseArcStart + (ptrRange.StartValue - MinValueDisplayed) * m_BaseArcSweep / (ValueRange);
-                        rangeSweepAngle = (ptrRange.EndValue - ptrRange.StartValue) * m_BaseArcSweep / (ValueRange);
+                        rangeStartAngle = m_BaseArcStart + (ptrRange.StartValue - MinValue) * m_BaseArcSweep / ValueRange;
+                        rangeSweepAngle = (ptrRange.EndValue - ptrRange.StartValue) * m_BaseArcSweep / ValueRange;
                         gp.Reset();
                         int outerRadius = (int)(ptrRange.OuterRadius * centerFactor);
                         gp.AddPie(new Rectangle(Center.X - outerRadius, Center.Y - outerRadius,
@@ -1468,25 +1317,44 @@ namespace AGauge
                 ggr.SetClip(ClientRectangle);
                 RenderDefaultArc(ggr);
 
-                var Format = StringFormat.GenericTypographic;
-
-                #region ScaleNumbers
-                string valueText = "";
-                SizeF boundingBox;
+                #region Gauge scale and numbers
                 float countValue = 0;
-                int counter1 = 0;
+                var Format = StringFormat.GenericTypographic;
                 Format.Alignment = StringAlignment.Near;
+
+                // Determine if the major scale line step value is invalid, and if so, only display min and max lines.
+                int prefMajScaleStepValue = IsValidMajorStepValue(ValueRange) ? ScaleLinesMajorStepValue : ValueRange;
 
                 using (var pnMajorScaleLines = new Pen(m_ScaleLinesMajorColor, (int)(m_ScaleLinesMajorWidth * centerFactor)))
                 using (var brScaleNumbers = new SolidBrush(m_ScaleNumbersColor))
                 {
-                    while (countValue <= (ValueRange))
+                    while (countValue <= ValueRange)
                     {
-                        valueText = (MinValueDisplayed + countValue).ToString(m_ScaleNumbersFormat);
-                        ggr.ResetTransform();
-                        boundingBox = ggr.MeasureString(valueText, Font, -1, StringFormat.GenericTypographic);
+                        // Draw major scale line label.
+                        if (countValue >= m_ScaleNumbersStartScaleLine - 1)
+                        {
+                            string valueText = (MinValue + countValue).ToString(m_ScaleNumbersFormat);
+                            ggr.ResetTransform();
+                            SizeF boundingBox = ggr.MeasureString(valueText, Font, -1, StringFormat.GenericTypographic);
+
+                            ggr.SetClip(ClientRectangle);
+
+                            if (m_ScaleNumbersRotation != 0)
+                            {
+                                ggr.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                                ggr.RotateTransform(90.0F + m_BaseArcStart + countValue * m_BaseArcSweep / ValueRange);
+                            }
+
+                            ggr.TranslateTransform((float)(Center.X + m_ScaleNumbersRadius * centerFactor * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / ValueRange) * Math.PI / 180.0f)),
+                                                   (float)(Center.Y + m_ScaleNumbersRadius * centerFactor * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / ValueRange) * Math.PI / 180.0f)),
+                                                   MatrixOrder.Append);
+
+                            var ptText = new PointF(-boundingBox.Width / 2f, -fontBoundY1 - (fontBoundY2 - fontBoundY1 + 1f) / 2f);
+                            ggr.DrawString(valueText, Font, brScaleNumbers, ptText.X, ptText.Y, Format);
+                        }
 
                         // Draw major scale line
+                        ggr.ResetTransform();
                         gp.Reset();
                         int scaleLinesMajorOuterRadius = (int)(m_ScaleLinesMajorOuterRadius * centerFactor);
                         gp.AddEllipse(new Rectangle(Center.X - scaleLinesMajorOuterRadius, Center.Y - scaleLinesMajorOuterRadius, 2 * scaleLinesMajorOuterRadius, 2 * scaleLinesMajorOuterRadius));
@@ -1499,26 +1367,30 @@ namespace AGauge
                         ggr.DrawLine(pnMajorScaleLines,
                         Center.X,
                         Center.Y,
-                        (float)(Center.X + 2 * scaleLinesMajorOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (ValueRange)) * Math.PI / 180.0)),
-                        (float)(Center.Y + 2 * scaleLinesMajorOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (ValueRange)) * Math.PI / 180.0)));
+                        (float)(Center.X + 2 * scaleLinesMajorOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / ValueRange) * Math.PI / 180.0)),
+                        (float)(Center.Y + 2 * scaleLinesMajorOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / ValueRange) * Math.PI / 180.0)));
 
-                        // Prepare clipping for minor scale lines.
-                        gp.Reset();
-                        int scaleLinesMinorOuterRadius = (int)(m_ScaleLinesMinorOuterRadius * centerFactor);
-                        gp.AddEllipse(new Rectangle(Center.X - scaleLinesMinorOuterRadius, Center.Y - scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius));
-                        gp.Reverse();
-                        int scaleLinesMinorInnerRadius = (int)(m_ScaleLinesMinorInnerRadius * centerFactor);
-                        gp.AddEllipse(new Rectangle(Center.X - scaleLinesMinorInnerRadius, Center.Y - scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius));
-                        gp.Reverse();
-                        ggr.SetClip(gp);
-
-                        if (countValue < (ValueRange))
+                        // Draw minor and intermediate scale lines.
+                        if (countValue + 1 < ValueRange)
                         {
+                            gp.Reset();
+                            int scaleLinesMinorOuterRadius = (int)(m_ScaleLinesMinorOuterRadius * centerFactor);
+                            gp.AddEllipse(new Rectangle(Center.X - scaleLinesMinorOuterRadius, Center.Y - scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius));
+                            gp.Reverse();
+                            int scaleLinesMinorInnerRadius = (int)(m_ScaleLinesMinorInnerRadius * centerFactor);
+                            gp.AddEllipse(new Rectangle(Center.X - scaleLinesMinorInnerRadius, Center.Y - scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius, 2 * scaleLinesMinorInnerRadius));
+                            gp.Reverse();
+                            ggr.SetClip(gp);
+
                             using (var pnScaleLinesInter = new Pen(m_ScaleLinesInterColor, (int)(m_ScaleLinesInterWidth * centerFactor)))
                             using (var pnScaleLinesMinorColor = new Pen(m_ScaleLinesMinorColor, (int)(m_ScaleLinesMinorWidth * centerFactor)))
                             {
                                 for (int counter2 = 1; counter2 <= m_ScaleLinesMinorTicks; counter2++)
                                 {
+                                    var lineEndCos = Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / ValueRange + counter2 * m_BaseArcSweep / (((float)(ValueRange / prefMajScaleStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0);
+                                    var lineEndSin = Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / ValueRange + counter2 * m_BaseArcSweep / (((float)(ValueRange / prefMajScaleStepValue)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0);
+
+                                    // Draw intermediate (half-way) scale line.
                                     if (((m_ScaleLinesMinorTicks % 2) == 1) && (m_ScaleLinesMinorTicks / 2) + 1 == counter2)
                                     {
                                         gp.Reset();
@@ -1533,8 +1405,8 @@ namespace AGauge
                                         ggr.DrawLine(pnScaleLinesInter,
                                         Center.X,
                                         Center.Y,
-                                        (float)(Center.X + 2 * scaleLinesInterOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (ValueRange) + counter2 * m_BaseArcSweep / (((float)((ValueRange) / ScaleLinesMajorStepValueDisplayed)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)),
-                                        (float)(Center.Y + 2 * scaleLinesInterOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (ValueRange) + counter2 * m_BaseArcSweep / (((float)((ValueRange) / ScaleLinesMajorStepValueDisplayed)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)));
+                                        (float)(Center.X + 2 * scaleLinesInterOuterRadius * lineEndCos),
+                                        (float)(Center.Y + 2 * scaleLinesInterOuterRadius * lineEndSin));
 
                                         gp.Reset();
                                         gp.AddEllipse(new Rectangle(Center.X - scaleLinesMinorOuterRadius, Center.Y - scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius, 2 * scaleLinesMinorOuterRadius));
@@ -1543,39 +1415,20 @@ namespace AGauge
                                         gp.Reverse();
                                         ggr.SetClip(gp);
                                     }
+                                    // Draw minor scale line.
                                     else
                                     {
                                         ggr.DrawLine(pnScaleLinesMinorColor,
                                         Center.X,
                                         Center.Y,
-                                        (float)(Center.X + 2 * scaleLinesMinorOuterRadius * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (ValueRange) + counter2 * m_BaseArcSweep / (((float)((ValueRange) / ScaleLinesMajorStepValueDisplayed)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)),
-                                        (float)(Center.Y + 2 * scaleLinesMinorOuterRadius * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (ValueRange) + counter2 * m_BaseArcSweep / (((float)((ValueRange) / ScaleLinesMajorStepValueDisplayed)) * (m_ScaleLinesMinorTicks + 1))) * Math.PI / 180.0)));
+                                        (float)(Center.X + 2 * scaleLinesMinorOuterRadius * lineEndCos),
+                                        (float)(Center.Y + 2 * scaleLinesMinorOuterRadius * lineEndSin));
                                     }
                                 }
                             }
                         }
 
-                        ggr.SetClip(ClientRectangle);
-
-                        if (m_ScaleNumbersRotation != 0)
-                        {
-                            ggr.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                            ggr.RotateTransform(90.0F + m_BaseArcStart + countValue * m_BaseArcSweep / (ValueRange));
-                        }
-
-                        ggr.TranslateTransform((float)(Center.X + m_ScaleNumbersRadius * centerFactor * Math.Cos((m_BaseArcStart + countValue * m_BaseArcSweep / (ValueRange)) * Math.PI / 180.0f)),
-                                               (float)(Center.Y + m_ScaleNumbersRadius * centerFactor * Math.Sin((m_BaseArcStart + countValue * m_BaseArcSweep / (ValueRange)) * Math.PI / 180.0f)),
-                                               System.Drawing.Drawing2D.MatrixOrder.Append);
-
-
-                        if (counter1 >= m_ScaleNumbersStartScaleLine - 1)
-                        {
-                            var ptText = new PointF(-boundingBox.Width / 2f, -fontBoundY1 - (fontBoundY2 - fontBoundY1 + 1f) / 2f);
-                            ggr.DrawString(valueText, Font, brScaleNumbers, ptText.X, ptText.Y, Format);
-                        }
-
-                        countValue += ScaleLinesMajorStepValueDisplayed;
-                        counter1++;
+                        countValue += prefMajScaleStepValue; //ScaleLinesMajorStepValue
                     }
                 }
                 #endregion

@@ -30,13 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.mainPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.aGauge = new AGauge.AGaugeControl();
             this.userInputAGaugeBusinessObjectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.manualInputsPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.valueInput = new AGaugeDemo.Composites.NumericInput();
             this.minInput = new AGaugeDemo.Composites.NumericInput();
             this.maxInput = new AGaugeDemo.Composites.NumericInput();
             this.majStepVal = new AGaugeDemo.Composites.NumericInput();
+            this.aGauge = new AGauge.AGaugeControl();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userInputAGaugeBusinessObjectBindingSource)).BeginInit();
             this.manualInputsPanel.SuspendLayout();
@@ -54,19 +54,6 @@
             this.mainPanel.Size = new System.Drawing.Size(218, 358);
             this.mainPanel.TabIndex = 1;
             this.mainPanel.WrapContents = false;
-            // 
-            // aGauge
-            // 
-            this.aGauge.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.userInputAGaugeBusinessObjectBindingSource, "Value", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.aGauge.DataBindings.Add(new System.Windows.Forms.Binding("MaxValue", this.userInputAGaugeBusinessObjectBindingSource, "MaxValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.aGauge.DataBindings.Add(new System.Windows.Forms.Binding("MinValue", this.userInputAGaugeBusinessObjectBindingSource, "MinValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.aGauge.DataBindings.Add(new System.Windows.Forms.Binding("ScaleLinesMajorStepValue", this.userInputAGaugeBusinessObjectBindingSource, "MajorStepValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.aGauge.Location = new System.Drawing.Point(3, 3);
-            this.aGauge.Name = "aGauge";
-            this.aGauge.Size = new System.Drawing.Size(211, 206);
-            this.aGauge.TabIndex = 0;
-            this.aGauge.Text = null;
-            this.aGauge.Value = 0F;
             // 
             // userInputAGaugeBusinessObjectBindingSource
             // 
@@ -143,6 +130,18 @@
             this.majStepVal.Size = new System.Drawing.Size(206, 29);
             this.majStepVal.TabIndex = 3;
             this.majStepVal.Value = 1;
+            // 
+            // aGauge
+            // 
+            this.aGauge.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.userInputAGaugeBusinessObjectBindingSource, "Value", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.aGauge.DataBindings.Add(new System.Windows.Forms.Binding("MaxValue", this.userInputAGaugeBusinessObjectBindingSource, "MaxValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.aGauge.DataBindings.Add(new System.Windows.Forms.Binding("MinValue", this.userInputAGaugeBusinessObjectBindingSource, "MinValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.aGauge.Location = new System.Drawing.Point(3, 3);
+            this.aGauge.Name = "aGauge";
+            this.aGauge.Size = new System.Drawing.Size(211, 206);
+            this.aGauge.TabIndex = 0;
+            this.aGauge.Text = null;
+            this.aGauge.Value = 0F;
             // 
             // UserInputAGauge
             // 
