@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AGauge", "AGauge\AGauge.csproj", "{3CF36E77-CD6E-428A-89F9-31C8C8E595C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AGaugeClassic", "AGauge\AGaugeClassic.csproj", "{3CF36E77-CD6E-428A-89F9-31C8C8E595C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AGaugeDemo", "AGaugeDemo\AGaugeDemo.csproj", "{B5DBBA7D-17B1-4688-AB92-E09208D7D3BB}"
 EndProject

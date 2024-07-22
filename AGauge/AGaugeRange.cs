@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace AGauge
+namespace AGaugeClassic
 {
   public class AGaugeRange
   {
@@ -33,15 +33,15 @@ namespace AGauge
     [System.ComponentModel.Browsable(false)]
     public Boolean InRange { get; set; }
 
-    private AGaugeControl Owner;
+    private AGauge Owner;
     [System.ComponentModel.Browsable(false)]
-    public void SetOwner(AGaugeControl value) { Owner = value; }
+    public void SetOwner(AGauge value) { Owner = value; }
     private void NotifyOwner() { if (Owner != null) Owner.RepaintControl(); }
     private void NotifyChanging()
     {
       if (Owner != null)
       {
-        Owner.NotifyChanging(nameof(AGaugeControl.GaugeRanges));
+        Owner.NotifyChanging(nameof(AGauge.GaugeRanges));
       }
     }
 
@@ -49,7 +49,7 @@ namespace AGauge
     {
       if (Owner != null)
       {
-        Owner.NotifyChanged(nameof(AGaugeControl.GaugeRanges));
+        Owner.NotifyChanged(nameof(AGauge.GaugeRanges));
       }
     }
 

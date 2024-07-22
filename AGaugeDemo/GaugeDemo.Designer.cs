@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            AGauge.AGaugeLabel aGaugeLabel1 = new AGauge.AGaugeLabel();
-            AGauge.AGaugeRange aGaugeRange1 = new AGauge.AGaugeRange();
-            AGauge.AGaugeRange aGaugeRange2 = new AGauge.AGaugeRange();
-            AGauge.AGaugeRange aGaugeRange3 = new AGauge.AGaugeRange();
+            AGaugeClassic.AGaugeLabel aGaugeLabel1 = new AGaugeClassic.AGaugeLabel();
+            AGaugeClassic.AGaugeRange aGaugeRange1 = new AGaugeClassic.AGaugeRange();
+            AGaugeClassic.AGaugeRange aGaugeRange2 = new AGaugeClassic.AGaugeRange();
+            AGaugeClassic.AGaugeRange aGaugeRange3 = new AGaugeClassic.AGaugeRange();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Gauge1Container = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.aGauge1 = new AGauge.AGaugeControl();
+            this.aGauge1 = new AGaugeClassic.AGauge();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.button1 = new System.Windows.Forms.Button();
             this.userInputAGauge1 = new AGaugeDemo.Composites.UserInputAGauge();
@@ -111,14 +111,14 @@
             this.aGauge1.MaxValue = 200;
             this.aGauge1.MinValue = 0;
             this.aGauge1.Name = "aGauge1";
-            this.aGauge1.NeedleColor1 = System.Windows.Forms.AGaugeNeedleColor.Yellow;
+            this.aGauge1.NeedleColor1 = AGaugeClassic.AGaugeNeedleColor.Yellow;
             this.aGauge1.NeedleColor2 = System.Drawing.Color.Olive;
             this.aGauge1.ScaleNumbersFormat = null;
             this.aGauge1.Size = new System.Drawing.Size(220, 200);
             this.aGauge1.TabIndex = 0;
             this.aGauge1.Text = "aGauge1";
             this.aGauge1.Value = 0F;
-            this.aGauge1.ValueInRangeChanged += new System.EventHandler<AGauge.ValueInRangeChangedEventArgs>(this.aGauge1_ValueInRangeChanged);
+            this.aGauge1.ValueInRangeChanged += new System.EventHandler<AGaugeClassic.ValueInRangeChangedEventArgs>(this.aGauge1_ValueInRangeChanged);
             // 
             // trackBar1
             // 
@@ -173,7 +173,7 @@
         #endregion
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel Gauge1Container;
-        private AGauge.AGaugeControl aGauge1;
+        private AGaugeClassic.AGauge aGauge1;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel1;

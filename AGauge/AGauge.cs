@@ -7,16 +7,16 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace AGauge
+namespace AGaugeClassic
 {
 
     /// <summary> 
     /// .NET Framework WinForms Gauge control
     /// </summary>
-    [ToolboxBitmap(typeof(AGaugeControl), "AGaugeControl.AGaugeControl.bmp"),
+    [ToolboxBitmap(typeof(AGauge), "AGaugeControl.AGaugeControl.bmp"),
     DefaultEvent("ValueInRangeChanged"),
     Description("Displays a value on an analog gauge. Raises an event if the value enters one of the definable ranges.")]
-    public partial class AGaugeControl : Control
+    public partial class AGauge : Control
     {
         #region Defaults/Constants
         private const int MINIMUM_RANGE = 1; // The smallest difference between max and min.
@@ -808,7 +808,7 @@ namespace AGauge
 
         #endregion
 
-        public AGaugeControl()
+        public AGauge()
         {
             _GaugeRanges = new AGaugeRangeCollection(this);
             _GaugeLabels = new AGaugeLabelCollection(this);

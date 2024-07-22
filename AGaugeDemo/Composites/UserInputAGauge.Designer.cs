@@ -36,7 +36,7 @@
             this.minInput = new AGaugeDemo.Composites.NumericInput();
             this.maxInput = new AGaugeDemo.Composites.NumericInput();
             this.majStepVal = new AGaugeDemo.Composites.NumericInput();
-            this.aGauge = new AGauge.AGaugeControl();
+            this.aGauge = new AGaugeClassic.AGauge();
             this.mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userInputAGaugeBusinessObjectBindingSource)).BeginInit();
             this.manualInputsPanel.SuspendLayout();
@@ -164,7 +164,7 @@
 
         #endregion
 
-        private AGauge.AGaugeControl aGauge;
+        private AGaugeClassic.AGauge aGauge;
         private System.Windows.Forms.FlowLayoutPanel mainPanel;
         private System.Windows.Forms.FlowLayoutPanel manualInputsPanel;
         private NumericInput valueInput;

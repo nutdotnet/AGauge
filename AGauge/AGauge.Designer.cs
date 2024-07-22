@@ -1,6 +1,6 @@
-namespace AGauge
+namespace AGaugeClassic
 {
-    partial class AGaugeControl
+    partial class AGauge
     {
         /// <summary>
         /// Required designer variable.

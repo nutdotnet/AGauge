@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
@@ -11,19 +7,11 @@ namespace AGaugeDemo.Composites
     [Description("Composite control with an AGaugeControl and list of inputs the user can manually interact with.")]
     public partial class UserInputAGauge : UserControl
     {
-        //private static List<PropertyInfo> inputProperties = typeof(AGauge.AGaugeControl)
-        //    .GetProperties().Where(pi => Attribute.IsDefined(pi, typeof(BindableAttribute)) &&
-        //    (pi.PropertyType == typeof(int) | pi.PropertyType == typeof(float))).ToList();
-
         private UserInputAGaugeBusinessObject businessObject = new UserInputAGaugeBusinessObject();
-            // { MinValue = -100, Value = 0, MaxValue = 400 };
 
         public UserInputAGauge()
         {
             InitializeComponent();
-
-            // Additional binding modifications for value checking
-
 
             userInputAGaugeBusinessObjectBindingSource.DataSource = businessObject;
         }

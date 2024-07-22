@@ -109,12 +109,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AGauge\AGauge.csproj">
-      <Project>{cbdb1d25-5a95-43d4-a958-bf6ae65c6c3f}</Project>
-      <Name>AGauge</Name>
+    <ProjectReference Include="..\AGauge\AGaugeClassic.csproj">
+      <Project>{3cf36e77-cd6e-428a-89f9-31c8c8e595c7}</Project>
+      <Name>AGaugeClassic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

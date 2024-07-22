@@ -1,16 +1,16 @@
 ﻿using System.Collections;
 
-namespace AGauge
+namespace AGaugeClassic
 {
   public class AGaugeRangeCollection : CollectionBase
   {
-    private AGaugeControl m_Owner;
-    public AGaugeRangeCollection(AGaugeControl sender) { m_Owner = sender; }
+    private AGauge m_Owner;
+    public AGaugeRangeCollection(AGauge sender) { m_Owner = sender; }
     private void NotifyChanging()
     {
       if (m_Owner != null)
       {
-        m_Owner.NotifyChanging(nameof(AGaugeControl.GaugeRanges));
+        m_Owner.NotifyChanging(nameof(AGauge.GaugeRanges));
       }
     }
 
@@ -18,7 +18,7 @@ namespace AGauge
     {
       if (m_Owner != null)
       {
-        m_Owner.NotifyChanged(nameof(AGaugeControl.GaugeRanges));
+        m_Owner.NotifyChanged(nameof(AGauge.GaugeRanges));
       }
     }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace AGauge
+namespace AGaugeClassic
 {
   public class AGaugeLabel
   {
@@ -13,8 +13,8 @@ namespace AGauge
     private string _Name;
 
     [System.ComponentModel.Browsable(false)]
-    public void SetOwner(AGaugeControl value) { Owner = value; }
-    private AGaugeControl Owner;
+    public void SetOwner(AGauge value) { Owner = value; }
+    private AGauge Owner;
 
     private void NotifyOwner() { if (Owner != null) Owner.RepaintControl(); }
 
@@ -22,7 +22,7 @@ namespace AGauge
     {
       if (Owner != null)
       {
-        Owner.NotifyChanging(nameof(AGaugeControl.GaugeLabels));
+        Owner.NotifyChanging(nameof(AGauge.GaugeLabels));
       }
     }
 
@@ -30,7 +30,7 @@ namespace AGauge
     {
       if (Owner != null)
       {
-        Owner.NotifyChanged(nameof(AGaugeControl.GaugeLabels));
+        Owner.NotifyChanged(nameof(AGauge.GaugeLabels));
       }
     }
 

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 
-namespace AGauge
+namespace AGaugeClassic
 {
     public class AGaugeLabelCollection : CollectionBase
     {
-        private readonly AGaugeControl m_Owner;
+        private readonly AGauge m_Owner;
 
-        public AGaugeLabelCollection(AGaugeControl sender)
+        public AGaugeLabelCollection(AGauge sender)
         {
             m_Owner = sender;
         }
@@ -15,7 +15,7 @@ namespace AGauge
         {
             if (m_Owner != null)
             {
-                m_Owner.NotifyChanging(nameof(AGaugeControl.GaugeLabels));
+                m_Owner.NotifyChanging(nameof(AGauge.GaugeLabels));
             }
         }
 
@@ -23,7 +23,7 @@ namespace AGauge
         {
             if (m_Owner != null)
             {
-                m_Owner.NotifyChanged(nameof(AGaugeControl.GaugeLabels));
+                m_Owner.NotifyChanged(nameof(AGauge.GaugeLabels));
             }
         }
 
