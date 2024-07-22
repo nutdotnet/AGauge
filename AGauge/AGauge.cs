@@ -824,42 +824,6 @@ namespace AGaugeClassic
 #endif
         }
 
-        #region Errors
-
-        private Dictionary<string, string> _errors = new Dictionary<string, string>();
-        public string this[string propertyName]
-        {
-            get
-            {
-                return _errors[propertyName];
-            }
-
-            private set
-            {
-                _errors[propertyName] = value;
-                _lastError = value;
-            }
-        }
-
-        private void ClearErrors(string propertyName = "")
-        {
-            if (propertyName == string.Empty)
-                _errors.Clear();
-            else if (_errors.ContainsKey(propertyName))
-                _errors.Remove(propertyName);
-        }
-
-        private void SetError(string propertyName, string value)
-        {
-            this[propertyName] = value;
-            _lastError = value;
-        }
-
-        string _lastError = string.Empty;
-        public string Error => _lastError;
-
-        #endregion
-
         #region Helper
 
         #region Gauge scale
