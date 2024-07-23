@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace System.Windows.Forms
+﻿namespace AGaugeClassic
 {
-  internal static class Categories
+    internal static class Categories
   {
     public const string Appearance = "Appearance";
 

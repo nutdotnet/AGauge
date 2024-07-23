@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Project
         run: >
-          dotnet build ${{ env.PRIMARY_FOLDER }}\AGauge.csproj
+          dotnet build ${{ env.PRIMARY_FOLDER }}\AGaugeClassic.csproj
           --nologo
           -c Debug
           -p:Version=1.0.0.0

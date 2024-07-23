@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AGaugeClassic;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,14 +9,12 @@ namespace AGaugeDemo
     {
         private AGaugeLabel label;
         private AGaugeRange alert;
+
         public GaugeDemo()
         {
             InitializeComponent();
             label = aGauge1.GaugeLabels.FindByName("GaugeLabel1");
             alert = aGauge1.GaugeRanges.FindByName("AlertRange");
-
-            tb_majTicks.Minimum = (int)gge_majTicks.MinValue;
-            tb_majTicks.Maximum = (int)gge_majTicks.MaxValue;
         }
 
         #region aGauge1
@@ -46,16 +45,5 @@ namespace AGaugeDemo
         }
 
         #endregion
-
-        #region gge_majTicks
-
-
-        #endregion
-
-        private void tb_majTicks_ValueChanged(object sender, EventArgs e)
-        {
-            gge_majTicks.Value = tb_majTicks.Value;
-            gge_majTicks.GaugeLabels[0].Text = tb_majTicks.Value.ToString();
-        }
     }
 }
